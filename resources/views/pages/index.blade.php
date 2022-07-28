@@ -1,10 +1,13 @@
 @extends('layout.base')
 
-@section('title', 'Halaman Utama')
+@section('title', 'Home')
 
 @section('main-content')
 
-    <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800">Form Input</h1>
-
+    <div class="row">
+        <div class="col-12">
+            <h1 class="h3 mb-4 text-gray-800">Home (?)</h1>
+        </div>
+    </div>
+    
 @endsection

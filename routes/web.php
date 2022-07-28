@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BPOMController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function() {
     return view('pages.index');
+});
+
+Route::prefix('form')->group(function() {
+    Route::get('/bpom', [BPOMController::class, 'index']);
 });

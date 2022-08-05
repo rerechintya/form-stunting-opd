@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\BPOMController;
+use App\Http\Controllers\DiskominfoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,5 +19,6 @@ Route::get('/', function() {
 });
 
 Route::prefix('form')->group(function() {
-    Route::get('/bpom', [BPOMController::class, 'index']);
+    Route::get('/diskominfo', [DiskominfoController::class, 'index']);
+    Route::post('/diskominfo/submit', [DiskominfoController::class, 'store']);
 });

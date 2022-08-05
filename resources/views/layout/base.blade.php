@@ -78,9 +78,9 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="{{ url('form/bpom') }}">
+                <a class="nav-link" href="{{ url('form/diskominfo') }}">
                     <i class="fas fa-fw fa-clipboard"></i>
-                    <span>Form BPOM</span></a>
+                    <span>Form Diskominfo</span></a>
             </li>
 
             <!-- Divider -->

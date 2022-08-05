@@ -1,6 +1,6 @@
 @extends('layout.base')
 
-@section('title', 'Halaman Utama')
+@section('title', 'Form Diskominfo')
 
 @section('main-content')
 

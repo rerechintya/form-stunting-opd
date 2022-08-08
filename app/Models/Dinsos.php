@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Dinsos extends Model
 {
     use HasFactory;
-    protected $table = 'opd_diskominfo';
+    protected $table = 'opd_dinsos';
 
     protected $fillable = [
         'tahun',

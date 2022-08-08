@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dinsos;
+use App\Models\Kelurahan;
 use Illuminate\Http\Request;
 
 class DinsosController extends Controller
@@ -103,7 +105,7 @@ class DinsosController extends Controller
          * Cek apakah ada data pada tahun dan bulan (periode) yang sama, jika ada maka data tidak dapat disimpan untuk menghindari data duplikat
          * Lalu kembali ke halaman sebelumnya dengan pesan error
          */
-        $existing_periode = Diskominfo::where('tahun', $tahun)->where('bulan', $bulan)->first();
+        $existing_periode = Dinsos::where('tahun', $tahun)->where('bulan', $bulan)->first();
         if ($existing_periode) {
             return back()->with('error', "Data pada periode yang sama ({$this->months[$bulan - 1]} {$tahun}) sudah ada, tidak dapat menyimpan data duplikat.")->withInput();
         }
@@ -151,13 +153,13 @@ class DinsosController extends Controller
          * Submit data yang sudah disiapkan
          * Untuk data per kelurahan menggunakan perintah upsert untuk batch insert
          */
-        $non_kelurahan_insert = Diskominfo::create($non_kelurahan_data);
-        $per_kelurahan_insert = Diskominfo::upsert($per_kelurahan_data, []);
+        $non_kelurahan_insert = Dinsos::create($non_kelurahan_data);
+        $per_kelurahan_insert = Dinsos::upsert($per_kelurahan_data, []);
 
         /**
          * Kembali ke halaman sebelumnya dengan pesan berhasil atau gagal
          */
-        if ($non_kelurahan_data && $per_kelurahan_data) return redirect('/form/diskominfo')->with('success', 'Data berhasil disimpan.');
+        if ($non_kelurahan_data && $per_kelurahan_data) return redirect('/form/dinsos')->with('success', 'Data berhasil disimpan.');
 
         return back()->with('error', 'Gagal menyimpan data')->withInput();
 

@@ -19,6 +19,6 @@ Route::get('/', function() {
 });
 
 Route::prefix('form')->group(function() {
-    Route::get('/diskominfo', [DiskominfoController::class, 'index']);
-    Route::post('/diskominfo/submit', [DiskominfoController::class, 'store']);
+    Route::get('/dinsos', [DinsosController::class, 'index']);
+    Route::post('/dinsos/submit', [DinsosController::class, 'store']);
 });

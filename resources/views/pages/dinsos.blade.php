@@ -1,12 +1,12 @@
 @extends('layout.base')
 
-@section('title', 'Halaman Utama')
+@section('title', 'Form Dinsos')
 
 @section('main-content')
 <div class="row">
         <div class="col-12">
             <!-- Page Heading -->
-            <h1 class="h3 mb-4 text-gray-800">Form Input Diskominfo</h1>
+            <h1 class="h3 mb-4 text-gray-800">Form Input Dinsos</h1>
         </div>
         @if ($errors->any())
             <div class="col-12">
@@ -32,7 +32,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ url('/form/diskominfo/submit') }}" method="POST">
+                    <form action="{{ url('/form/dinsos/submit') }}" method="POST">
                         @csrf
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Bulan dan Tahun</label>
@@ -319,8 +319,8 @@
                               </div>
                               <button class="btn btn-outline-success mt-3 float-right">Submit</button>
 
-                      </div>
-                     
+                      </div>   
+                      </form>
               </div>
             </div>
           </div>

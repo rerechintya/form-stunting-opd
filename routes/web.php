@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DiskominfoController;
 use App\Http\Controllers\DinkesController;
+use App\Http\Controllers\DinsosController
 
 /*
 |--------------------------------------------------------------------------
@@ -25,4 +26,7 @@ Route::prefix('form')->group(function() {
 
     Route::get('/dinkes', [DinkesController::class, 'index']);
     Route::post('/dinkes/submit', [DinkesController::class, 'store']);
+    
+    Route::get('/dinsos', [DinsosController::class, 'index']);
+    Route::post('/dinsos/submit', [DinsosController::class, 'store']);
 });

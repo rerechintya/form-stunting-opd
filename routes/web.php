@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DiskominfoController;
-use App\Http\Controllers\DinkesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +21,4 @@ Route::get('/', function() {
 Route::prefix('form')->group(function() {
     Route::get('/diskominfo', [DiskominfoController::class, 'index']);
     Route::post('/diskominfo/submit', [DiskominfoController::class, 'store']);
-
-    Route::get('/dinkes', [DinkesController::class, 'index']);
-    Route::post('/dinkes/submit', [DinkesController::class, 'store']);
 });

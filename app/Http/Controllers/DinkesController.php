@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Diskominfo;
+use App\Models\Dinkes;
 use App\Models\Kelurahan;
 use Illuminate\Http\Request;
 
-class DiskominfoController extends Controller
+class DinkesController extends Controller
 {
     private $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-
     /**
      * Display a listing of the resource.
      *
@@ -18,13 +17,12 @@ class DiskominfoController extends Controller
     public function index()
     {
         $kelurahan = Kelurahan::all();
-        return view('pages.diskominfo', compact('kelurahan'));
+        return view('pages.dinkes', compact('kelurahan'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Show the form for creating a new resource.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -34,26 +32,36 @@ class DiskominfoController extends Controller
          */
         $validation = $request->validate([
             'date' => 'required',
-            'terlaksana_kampanye_pencegahan_stunting' => 'required',
-            'keterangan_terlaksana_kampanye_pencegahan_stunting' => 'nullable|string',
             'kelurahan' => 'required',
-            // 'kelurahan.*' => 'sometimes|numeric',
+            'kelurahan.*' => 'sometimes|numeric',
             'desa_kelurahan_melaksanakan_stbm' => 'required',
-            // 'desa_kelurahan_melaksanakan_stbm.*' => 'sometimes|numeric',
+            'desa_kelurahan_melaksanakan_stbm.*' => 'sometimes|numeric',
             'publikasi_tingkat_kabupaten_kota' => 'required',
-            // 'publikasi_tingkat_kabupaten_kota.*' => 'sometimes|numeric',
+            'publikasi_tingkat_kabupaten_kota.*' => 'sometimes|numeric',
             'terselenggara_audit_baduta_stunting' => 'required',
-            // 'terselenggara_audit_baduta_stunting.*' => 'sometimes|numeric',
+            'terselenggara_audit_baduta_stunting.*' => 'sometimes|numeric',
             'kabupaten_kota_mengimplementasi_surveilans_gizi_elektronik' => 'required',
-            // 'kabupaten_kota_mengimplementasi_surveilans_gizi_elektronik.*' => 'sometimes|numeric',
+            'kabupaten_kota_mengimplementasi_surveilans_gizi_elektronik.*' => 'sometimes|numeric',
             'desa_kelurahan_terbebas_babs_odf' => 'required',
-            // 'desa_kelurahan_terbebas_babs_odf.*' => 'sometimes|numeric',
+            'desa_kelurahan_terbebas_babs_odf.*' => 'sometimes|numeric',
             'persentase_sasaran_pemahaman_stunting' => 'required',
-            // 'persentase_sasaran_pemahaman_stunting.*' => 'sometimes|numeric',
+            'persentase_sasaran_pemahaman_stunting.*' => 'sometimes|numeric',
             'terpenuhi_standar_pemantauan_di_posyandu' => 'required',
-            // 'terpenuhi_standar_pemantauan_di_posyandu.*' => 'sometimes|numeric',
+            'terpenuhi_standar_pemantauan_di_posyandu.*' => 'sometimes|numeric',
             'tersedia_bidan_desa_kelurahan' => 'required',
-            // 'tersedia_bidan_desa_kelurahan.*' => 'sometimes|numeric',
+            'tersedia_bidan_desa_kelurahan.*' => 'sometimes|numeric',
+            'jumlah_balita' => 'required',
+            'jumlah_balita.*' => 'sometimes|numeric',
+            'jumlah_balita_sangat_pendek' => 'required',
+            'jumlah_balita_sangat_pendek.*' => 'sometimes|numeric',
+            'jumlah_balita_pendek' => 'required',
+            'jumlah_balita_pendek.*' => 'sometimes|numeric',
+            'remaja_putri_status_anemia' => 'required',
+            'remaja_putri_status_anemia.*' => 'sometimes|numeric',
+            'jumlah_remaja_putri_dapat_pelayanan' => 'required',
+            'jumlah_remaja_putri_dapat_pelayanan.*' => 'sometimes|numeric',
+            'presentase_remaja_putri_anemia' => 'required',
+            'presentase_remaja_putri_anemia.*' => 'sometimes|numeric',
         ]);
         /**
          * Jika validasi gagal, kembali ke halaman sebelumnya dengan pesan error
@@ -71,21 +79,11 @@ class DiskominfoController extends Controller
          * Cek apakah ada data pada tahun dan bulan (periode) yang sama, jika ada maka data tidak dapat disimpan untuk menghindari data duplikat
          * Lalu kembali ke halaman sebelumnya dengan pesan error
          */
-        $existing_periode = Diskominfo::where('tahun', $tahun)->where('bulan', $bulan)->first();
+        $existing_periode = Dinkes::where('tahun', $tahun)->where('bulan', $bulan)->first();
         if ($existing_periode) {
             return back()->with('error', "Data pada periode yang sama ({$this->months[$bulan - 1]} {$tahun}) sudah ada, tidak dapat menyimpan data duplikat.")->withInput();
         }
         
-        /**
-         * Siapkan data yang berbentuk kolom isian status ya/tidak, contohnya pada OPD Diskominfo yaitu data pada sheet "Kominfo"
-         */
-        $non_kelurahan_data = [
-            'tahun' => $tahun,
-            'bulan' => $bulan,
-            'terlaksana_kampanye_pencegahan_stunting' => $request->terlaksana_kampanye_pencegahan_stunting,
-            'keterangan_terlaksana_kampanye_pencegahan_stunting' => $request->keterangan_terlaksana_kampanye_pencegahan_stunting
-        ];
-
         /**
          * Siapkan data yang berbentuk per kelurahan, contohnya pada OPD Diskominfo yaitu data pada sheet "Kesehatan (Data Supply)"
          */
@@ -95,8 +93,6 @@ class DiskominfoController extends Controller
                 'tahun' => $tahun,
                 'bulan' => $bulan,
                 'kelurahan' => $request->kelurahan[$i],
-                'terlaksana_kampanye_pencegahan_stunting' => null,
-                'keterangan_terlaksana_kampanye_pencegahan_stunting' => null,
                 'desa_kelurahan_melaksanakan_stbm' => $request->desa_kelurahan_melaksanakan_stbm[$i],
                 'publikasi_tingkat_kabupaten_kota' => $request->publikasi_tingkat_kabupaten_kota[$i],
                 'terselenggara_audit_baduta_stunting' => $request->terselenggara_audit_baduta_stunting[$i],
@@ -105,6 +101,12 @@ class DiskominfoController extends Controller
                 'persentase_sasaran_pemahaman_stunting' => $request->persentase_sasaran_pemahaman_stunting[$i],
                 'terpenuhi_standar_pemantauan_di_posyandu' => $request->terpenuhi_standar_pemantauan_di_posyandu[$i],
                 'tersedia_bidan_desa_kelurahan' => $request->tersedia_bidan_desa_kelurahan[$i],
+                'jumlah_balita' => $request->jumlah_balita[$i],
+                'jumlah_balita_sangat_pendek' => $request->jumlah_balita_sangat_pendek[$i], 
+                'jumlah_balita_pendek' => $request->jumlah_balita_pendek[$i],
+                'remaja_putri_status_anemia' => $request->remaja_putri_status_anemia[$i],
+                'jumlah_remaja_putri_dapat_pelayanan' => $request->jumlah_remaja_putri_dapat_pelayanan[$i],
+                'presentase_remaja_putri_anemia' => $request->presentase_remaja_putri_anemia[$i],
             ]);
         }
 
@@ -112,25 +114,23 @@ class DiskominfoController extends Controller
          * Submit data yang sudah disiapkan
          * Untuk data per kelurahan menggunakan perintah upsert untuk batch insert
          */
-        $non_kelurahan_insert = Diskominfo::create($non_kelurahan_data);
-        $per_kelurahan_insert = Diskominfo::upsert($per_kelurahan_data, []);
+        $per_kelurahan_insert = Dinkes::upsert($per_kelurahan_data, []);
 
         /**
          * Kembali ke halaman sebelumnya dengan pesan berhasil atau gagal
          */
-        if ($non_kelurahan_data && $per_kelurahan_data) return redirect('/form/diskominfo')->with('success', 'Data berhasil disimpan.');
+        if ($per_kelurahan_data) return redirect('/form/dinkes')->with('success', 'Data berhasil disimpan.');
 
         return back()->with('error', 'Gagal menyimpan data')->withInput();
-
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Diskominfo  $diskominfo
+     * @param  \App\Models\Dinkes  $dinkes
      * @return \Illuminate\Http\Response
      */
-    public function show(Diskominfo $diskominfo)
+    public function show(Dinkes $dinkes)
     {
         //
     }
@@ -138,10 +138,10 @@ class DiskominfoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Diskominfo  $diskominfo
+     * @param  \App\Models\Dinkes  $dinkes
      * @return \Illuminate\Http\Response
      */
-    public function edit(Diskominfo $diskominfo)
+    public function edit(Dinkes $dinkes)
     {
         //
     }
@@ -150,10 +150,10 @@ class DiskominfoController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Diskominfo  $diskominfo
+     * @param  \App\Models\Dinkes  $dinkes
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Diskominfo $diskominfo)
+    public function update(Request $request, Dinkes $dinkes)
     {
         //
     }
@@ -161,10 +161,10 @@ class DiskominfoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Diskominfo  $diskominfo
+     * @param  \App\Models\Dinkes  $dinkes
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Diskominfo $diskominfo)
+    public function destroy(Dinkes $dinkes)
     {
         //
     }

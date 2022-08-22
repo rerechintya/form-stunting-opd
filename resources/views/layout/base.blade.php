@@ -83,6 +83,13 @@
                     <span>Form Diskominfo</span></a>
             </li>
 
+            <!-- Nav Item - Charts -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url('form/dinkes') }}">
+                    <i class="fas fa-fw fa-clipboard"></i>
+                    <span>Form Dinkes</span></a>
+            </li>
+
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 

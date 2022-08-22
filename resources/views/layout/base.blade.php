@@ -82,6 +82,11 @@
                     <i class="fas fa-fw fa-clipboard"></i>
                     <span>Form Diskominfo</span></a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url('form/dinsos') }}">
+                    <i class="fas fa-fw fa-clipboard"></i>
+                    <span>Form Dinsos</span></a>
+            </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">

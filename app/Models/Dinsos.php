@@ -17,6 +17,10 @@ class Dinsos extends Model
         // Sesuaikan dengan yg dideklarasikan di migration
         'terlaksana_kampanye_pencegahan_stunting',
         'keterangan_terlaksana_kampanye_pencegahan_stunting',
+        'Bantuan_PBI_kesehatan' ,
+        'Jumlah_keluarga_miskin_rentan_bantuan_tunai',
+        'Jumlah_keluarga_miskin_rentan_bantuan_sosial',
+        'Jumlah_PKH_kesehatan_gizi',
         'Pus_status_miskin_tunai',
         'Jumlah_pus5',
         'Presentasepus_tunai_BST_KJS',

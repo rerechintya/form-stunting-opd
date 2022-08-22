@@ -78,9 +78,14 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="{{ url('form/dinsos') }}">
+                <a class="nav-link" href="{{ url('form/diskominfo') }}">
                     <i class="fas fa-fw fa-clipboard"></i>
                     <span>Form Diskominfo</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url('form/dinsos') }}">
+                    <i class="fas fa-fw fa-clipboard"></i>
+                    <span>Form Dinsos</span></a>
             </li>
 
             <!-- Divider -->

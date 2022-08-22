@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DiskominfoController;
 use App\Http\Controllers\DinkesController;
-use App\Http\Controllers\DinsosController
+use App\Http\Controllers\DinsosController;
 
 /*
 |--------------------------------------------------------------------------

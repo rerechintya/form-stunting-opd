@@ -69,28 +69,28 @@
                                 <a class="nav-link" data-toggle="pill" href="#Bumil2">Bumil 2</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href="#">Balita 1</a>
+                                <a class="nav-link" data-toggle="pill" href="#Balita1">Balita 1</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href="#">Balita 2</a>
+                                <a class="nav-link" data-toggle="pill" href="#Balita2">Balita 2</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href="#">Balita 3</a>
+                                <a class="nav-link" data-toggle="pill" href="#Balita3">Balita 3</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href="#">Balita 4</a>
+                                <a class="nav-link" data-toggle="pill" href="#Balita4">Balita 4</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href="#">Balita 5</a>
+                                <a class="nav-link" data-toggle="pill" href="#Balita5">Balita 5</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href="#">Balita 6</a>
+                                <a class="nav-link" data-toggle="pill" href="#Balita6">Balita 6</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href="#">Keluarga Beresiko 1</a>
+                                <a class="nav-link" data-toggle="pill" href="#KelResiko1">Keluarga Beresiko 1</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href="#">Keluarga Beresiko 2</a>
+                                <a class="nav-link" data-toggle="pill" href="#KelResiko2">Keluarga Beresiko 2</a>
                             </li>
                         </ul>
 
@@ -496,6 +496,391 @@
                                                     </td>
                                                     <td>
                                                         <input type="number" name="presentase_ibu_hamil_konsum_ttd_90_tablet_selama_hamil[]" class="form-control" value="{{ old('presentase_ibu_hamil_konsum_ttd_90_tablet_selama_hamil.'.$i-1) }}">
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="Balita1">
+                                <div class="alert alert-info alert-dismissable fade show mt-3" role="alert">
+                                    Setiap kolom harus diisi. Bila ada data yang kosong, masukkan "0".
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="table-responsive" style="max-height: 60vh; overflow: scroll">
+                                    <table class="table table-striped table-bordered table-hover table-form">
+                                        <thead>
+                                            <tr>
+                                                <th>No.</th>
+                                                <th>Kecamatan</th>
+                                                <th>Puskesmas</th>
+                                                <th>Kelurahan</th>
+                                                <th>Jumlah bayi usia kurang dari 6 bulan mendapatkan ASI ekslusif</th>
+                                                <th>Jumlah keseluruhan bayi usia kurang dari 6 bulan</th>
+                                                <th>Persentase bayi usia kurang dari 6 bulan mendapat ASI Ekslusif terhadap seluruh bayi kurang dari 6 bulan dalam kurun waktu yang sama</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @php
+                                                $i = 0;
+                                            @endphp
+                                            @foreach($kelurahan as $kel)
+                                                <tr>
+                                                    <td class="text-center">{{ ($i++) + 1 }}</td>
+                                                    <td>{{ $kel->parent_kecamatan->kecamatan }}</td>
+                                                    <td>{{ $kel->parent_puskesmas->puskesmas}}</td>
+                                                    <td>
+                                                        {{ $kel->kelurahan }}
+                                                        <input type="hidden" name="kelurahan[]" value="{{ $kel->id }}" readonly>
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" name="jml_bayi_krg_6_bulan_dapat_asi_ekslusif[]" class="form-control" value="{{ old('jml_bayi_krg_6_bulan_dapat_asi_ekslusif.'.$i-1) }}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" name="jml_seluruh_bayi_krg_6_bulan[]" class="form-control" value="{{ old('jml_seluruh_bayi_krg_6_bulan.'.$i-1) }}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" name="presentase_bayi_dapat_asi_krg_6_bulan[]" class="form-control" value="{{ old('presentase_bayi_dapat_asi_krg_6_bulan.'.$i-1) }}">
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="Balita2">
+                                <div class="alert alert-info alert-dismissable fade show mt-3" role="alert">
+                                    Setiap kolom harus diisi. Bila ada data yang kosong, masukkan "0".
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="table-responsive" style="max-height: 60vh; overflow: scroll">
+                                    <table class="table table-striped table-bordered table-hover table-form">
+                                        <thead>
+                                            <tr>
+                                                <th>No.</th>
+                                                <th>Kecamatan</th>
+                                                <th>Puskesmas</th>
+                                                <th>Kelurahan</th>
+                                                <th>Jumlah anak usia 6-23 bulan uang mendapatkan makanan  pendamping ASI</th>
+                                                <th>Jumlah anak usia 6-23 bulan keseluruhan</th>
+                                                <th>Persentase anak usia 6-23 bulan mendapat MP-ASI layak terhadap seluruh anak usia 6-23 bulan dalam kurun waktu yang sama</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @php
+                                                $i = 0;
+                                            @endphp
+                                            @foreach($kelurahan as $kel)
+                                                <tr>
+                                                    <td class="text-center">{{ ($i++) + 1 }}</td>
+                                                    <td>{{ $kel->parent_kecamatan->kecamatan }}</td>
+                                                    <td>{{ $kel->parent_puskesmas->puskesmas}}</td>
+                                                    <td>
+                                                        {{ $kel->kelurahan }}
+                                                        <input type="hidden" name="kelurahan[]" value="{{ $kel->id }}" readonly>
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" name="jml_anak_usia_6_23_bulan_dapat_makanan_pedamping_asi[]" class="form-control" value="{{ old('jml_anak_usia_6_23_bulan_dapat_makanan_pedamping_asi.'.$i-1) }}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" name="jml_anak_usia_6_23_bulan_seluruh[]" class="form-control" value="{{ old('jml_anak_usia_6_23_bulan_seluruh.'.$i-1) }}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" name="presentase_anak_usia_6_23_bulan_dapat_mpasi[]" class="form-control" value="{{ old('presentase_anak_usia_6_23_bulan_dapat_mpasi.'.$i-1) }}">
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="Balita3">
+                                <div class="alert alert-info alert-dismissable fade show mt-3" role="alert">
+                                    Setiap kolom harus diisi. Bila ada data yang kosong, masukkan "0".
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="table-responsive" style="max-height: 60vh; overflow: scroll">
+                                    <table class="table table-striped table-bordered table-hover table-form">
+                                        <thead>
+                                            <tr>
+                                                <th>No.</th>
+                                                <th>Kecamatan</th>
+                                                <th>Puskesmas</th>
+                                                <th>Kelurahan</th>
+                                                <th>Jumlah anak berusia di bawah lima tahun (balita) gizi buruk yang mendapat pelayanan tata laksana gizi buruk</th>
+                                                <th>Jumlah seluruh balita gizi buruk</th>
+                                                <th>Persentase layanan tata laksana gizi buruk terhadap seluruh anak balita gizi buruk  dalam kurun waktu yang sama</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @php
+                                                $i = 0;
+                                            @endphp
+                                            @foreach($kelurahan as $kel)
+                                                <tr>
+                                                    <td class="text-center">{{ ($i++) + 1 }}</td>
+                                                    <td>{{ $kel->parent_kecamatan->kecamatan }}</td>
+                                                    <td>{{ $kel->parent_puskesmas->puskesmas}}</td>
+                                                    <td>
+                                                        {{ $kel->kelurahan }}
+                                                        <input type="hidden" name="kelurahan[]" value="{{ $kel->id }}" readonly>
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" name="jml_anak_balita_yg_dapat_layanan_gizi_buruk[]" class="form-control" value="{{ old('jml_anak_balita_yg_dapat_layanan_gizi_buruk.'.$i-1) }}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" name="jml_seluruh_balita_gizi_buruk[]" class="form-control" value="{{ old('jml_seluruh_balita_gizi_buruk.'.$i-1) }}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" name="presentase_layanan_gizi_buruk_thdp_balita[]" class="form-control" value="{{ old('presentase_layanan_gizi_buruk_thdp_balita.'.$i-1) }}">
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="Balita4">
+                                <div class="alert alert-info alert-dismissable fade show mt-3" role="alert">
+                                    Setiap kolom harus diisi. Bila ada data yang kosong, masukkan "0".
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="table-responsive" style="max-height: 60vh; overflow: scroll">
+                                    <table class="table table-striped table-bordered table-hover table-form">
+                                        <thead>
+                                            <tr>
+                                                <th>No.</th>
+                                                <th>Kecamatan</th>
+                                                <th>Puskesmas</th>
+                                                <th>Kelurahan</th>
+                                                <th>Anak berusia di bawah lima tahun (balita)  yang dipantau pertumbuhan dan perkembangannya</th>
+                                                <th>Jumlah keseluruhan anak balita</th>
+                                                <th>Persentase layanan pemantauan pertumbuhan dan perkembangan balita terhadap seluruh anak balita dalam kurun waktu yang sama</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @php
+                                                $i = 0;
+                                            @endphp
+                                            @foreach($kelurahan as $kel)
+                                                <tr>
+                                                    <td class="text-center">{{ ($i++) + 1 }}</td>
+                                                    <td>{{ $kel->parent_kecamatan->kecamatan }}</td>
+                                                    <td>{{ $kel->parent_puskesmas->puskesmas}}</td>
+                                                    <td>
+                                                        {{ $kel->kelurahan }}
+                                                        <input type="hidden" name="kelurahan[]" value="{{ $kel->id }}" readonly>
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" name="balita_yg_dipantau_tumbuh_kembang[]" class="form-control" value="{{ old('balita_yg_dipantau_tumbuh_kembang.'.$i-1) }}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" name="jml_seluruh_balita_balita4[]" class="form-control" value="{{ old('jml_seluruh_balita_balita4.'.$i-1) }}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" name="presentase_layanan_pantau_tumbuh_kembang_balita[]" class="form-control" value="{{ old('presentase_layanan_pantau_tumbuh_kembang_balita.'.$i-1) }}">
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="Balita5">
+                                <div class="alert alert-info alert-dismissable fade show mt-3" role="alert">
+                                    Setiap kolom harus diisi. Bila ada data yang kosong, masukkan "0".
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="table-responsive" style="max-height: 60vh; overflow: scroll">
+                                    <table class="table table-striped table-bordered table-hover table-form">
+                                        <thead>
+                                            <tr>
+                                                <th>No.</th>
+                                                <th>Kecamatan</th>
+                                                <th>Puskesmas</th>
+                                                <th>Kelurahan</th>
+                                                <th>Jumlah anak berusia di bawah lima tahun (balita) gizi kurang yang mendapat tambahan asupan gizi</th>
+                                                <th>Jumlah seluruh balita gizi kurang</th>
+                                                <th>Persentase layanan tambahan asupan gizi balita terhadap seluruh anak balita dalam kurun waktu yang sama</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @php
+                                                $i = 0;
+                                            @endphp
+                                            @foreach($kelurahan as $kel)
+                                                <tr>
+                                                    <td class="text-center">{{ ($i++) + 1 }}</td>
+                                                    <td>{{ $kel->parent_kecamatan->kecamatan }}</td>
+                                                    <td>{{ $kel->parent_puskesmas->puskesmas}}</td>
+                                                    <td>
+                                                        {{ $kel->kelurahan }}
+                                                        <input type="hidden" name="kelurahan[]" value="{{ $kel->id }}" readonly>
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" name="jml_balita_dapat_asupan_gizi[]" class="form-control" value="{{ old('jml_balita_dapat_asupan_gizi.'.$i-1) }}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" name="jml_seluruh_balita_gizi_kurang[]" class="form-control" value="{{ old('jml_seluruh_balita_gizi_kurang.'.$i-1) }}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" name="presentase_layanan_asupan_gizi_thdp_balita[]" class="form-control" value="{{ old('presentase_layanan_asupan_gizi_thdp_balita.'.$i-1) }}">
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="Balita6">
+                                <div class="alert alert-info alert-dismissable fade show mt-3" role="alert">
+                                    Setiap kolom harus diisi. Bila ada data yang kosong, masukkan "0".
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="table-responsive" style="max-height: 60vh; overflow: scroll">
+                                    <table class="table table-striped table-bordered table-hover table-form">
+                                        <thead>
+                                            <tr>
+                                                <th>No.</th>
+                                                <th>Kecamatan</th>
+                                                <th>Balita yang memperoleh imunisasi dasar lengkap</th>
+                                                <th>Jumlah keseluruhan anak balita</th>
+                                                <th>Persentase layanan imunisasi dasar lengkap balita terhadap seluruh anak balita dalam kurun waktu yang sama</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @php
+                                                $i = 0;
+                                            @endphp
+                                            @foreach($kelurahan as $kel)
+                                                <tr>
+                                                    <td class="text-center">{{ ($i++) + 1 }}</td>
+                                                    <td>{{ $kel->parent_kecamatan->kecamatan }}</td>
+                                                    <td>
+                                                        <input type="number" name="balita_peroleh_imunisasi_lengkap[]" class="form-control" value="{{ old('balita_peroleh_imunisasi_lengkap.'.$i-1) }}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" name="jml_seluruh_balita_balita6[]" class="form-control" value="{{ old('jml_seluruh_balita_balita6.'.$i-1) }}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" name="presentase_layanan_imunisasi_lengkap_balita[]" class="form-control" value="{{ old('presentase_layanan_imunisasi_lengkap_balita.'.$i-1) }}">
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="KelResiko1">
+                                <div class="alert alert-info alert-dismissable fade show mt-3" role="alert">
+                                    Setiap kolom harus diisi. Bila ada data yang kosong, masukkan "0".
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="table-responsive" style="max-height: 60vh; overflow: scroll">
+                                    <table class="table table-striped table-bordered table-hover table-form">
+                                        <thead>
+                                            <tr>
+                                                <th>No.</th>
+                                                <th>Kecamatan</th>
+                                                <th>Puskesmas</th>
+                                                <th>Kelurahan</th>
+                                                <th>Jumlah keluarga memiliki akses jamban sehat</th>
+                                                <th>Jumlah keluarga keseluruhan</th>
+                                                <th>Persentase keluarga yang telah stop BABS terhadap seluruh KK</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @php
+                                                $i = 0;
+                                            @endphp
+                                            @foreach($kelurahan as $kel)
+                                                <tr>
+                                                    <td class="text-center">{{ ($i++) + 1 }}</td>
+                                                    <td>{{ $kel->parent_kecamatan->kecamatan }}</td>
+                                                    <td>{{ $kel->parent_puskesmas->puskesmas}}</td>
+                                                    <td>
+                                                        {{ $kel->kelurahan }}
+                                                        <input type="hidden" name="kelurahan[]" value="{{ $kel->id }}" readonly>
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" name="jml_kel_miliki_jamban_sehat[]" class="form-control" value="{{ old('jml_kel_miliki_jamban_sehat.'.$i-1) }}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" name="jml_kel_keseluruhan_kel_resiko1[]" class="form-control" value="{{ old('jml_kel_keseluruhan_kel_resiko1.'.$i-1) }}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" name="presentase_kel_yg_telah_stop_babs[]" class="form-control" value="{{ old('presentase_kel_yg_telah_stop_babs.'.$i-1) }}">
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="KelResiko2">
+                                <div class="alert alert-info alert-dismissable fade show mt-3" role="alert">
+                                    Setiap kolom harus diisi. Bila ada data yang kosong, masukkan "0".
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="table-responsive" style="max-height: 60vh; overflow: scroll">
+                                    <table class="table table-striped table-bordered table-hover table-form">
+                                        <thead>
+                                            <tr>
+                                                <th>No.</th>
+                                                <th>Kecamatan</th>
+                                                <th>Puskesmas</th>
+                                                <th>Kelurahan</th>
+                                                <th>Jumlah keluarga yang melaksanakan PHBS</th>
+                                                <th>Jumlah keluarga keseluruhan</th>
+                                                <th>Persentase keluarga yang telah melaksanakan PHBS terhadap seluruh KK</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @php
+                                                $i = 0;
+                                            @endphp
+                                            @foreach($kelurahan as $kel)
+                                                <tr>
+                                                    <td class="text-center">{{ ($i++) + 1 }}</td>
+                                                    <td>{{ $kel->parent_kecamatan->kecamatan }}</td>
+                                                    <td>{{ $kel->parent_puskesmas->puskesmas}}</td>
+                                                    <td>
+                                                        {{ $kel->kelurahan }}
+                                                        <input type="hidden" name="kelurahan[]" value="{{ $kel->id }}" readonly>
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" name="jml_kel_laksanakan_phbs[]" class="form-control" value="{{ old('jml_kel_laksanakan_phbs.'.$i-1) }}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" name="jml_kel_keseluruhan_kel_resiko2[]" class="form-control" value="{{ old('jml_kel_keseluruhan_kel_resiko2.'.$i-1) }}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" name="presentase_kel_telah_laksanakan_phbs[]" class="form-control" value="{{ old('presentase_kel_telah_laksanakan_phbs.'.$i-1) }}">
                                                     </td>
                                                 </tr>
                                             @endforeach

@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class DinkesController extends Controller
 {
     private $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-    /**
+    /**  
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -62,6 +62,36 @@ class DinkesController extends Controller
             'jumlah_remaja_putri_dapat_pelayanan.*' => 'sometimes|numeric',
             'presentase_remaja_putri_anemia' => 'required',
             'presentase_remaja_putri_anemia.*' => 'sometimes|numeric',
+            'remaja_putri_konsum_ttd' => 'required',
+            'remaja_putri_konsum_ttd.*' => 'sometimes|numeric',
+            'jml_remaja_putri_seluruh' => 'required',
+            'jml_remaja_putri_seluruh.*' => 'sometimes|numeric',
+            'presentasi_remaja_putri_konsum_ttd' => 'required',
+            'presentasi_remaja_putri_konsum_ttd.*' => 'sometimes|numeric',
+            'jml_calon_pengantin_dapat_ttd' => 'required',
+            'jml_calon_pengantin_dapat_ttd.*' => 'sometimes|numeric',
+            'jml_calon_pengantin_seluruh' => 'required',
+            'jml_calon_pengantin_seluruh.*' => 'sometimes|numeric',
+            'presentase_calon_pengantin_terima_ttd_dlm_kurun_waktu_sama_pus1' => 'required',
+            'presentase_calon_pengantin_terima_ttd_dlm_kurun_waktu_sama_pus1.*' => 'sometimes|numeric',
+            'calon_pasangan_dapat_pemeriksaan_3bln_pranikah' => 'required',
+            'calon_pasangan_dapat_pemeriksaan_3bln_pranikah.*' => 'sometimes|numeric',
+            'jml_pasangan_yg_daftar_pranikah' => 'required',
+            'jml_pasangan_yg_daftar_pranikah.*' => 'sometimes|numeric',
+            'presentase_calon_pengantin_terima_ttd_dlm_kurun_waktu_sama_pus2' => 'required',
+            'presentase_calon_pengantin_terima_ttd_dlm_kurun_waktu_sama_pus2.*' => 'sometimes|numeric',
+            'jml_ibu_hamil_dapat_asupan_gizi_pmt' => 'required',
+            'jml_ibu_hamil_dapat_asupan_gizi_pmt.*' => 'sometimes|numeric',
+            'jml_keseluruhan_ibu_hamil_kek' => 'required',
+            'jml_keseluruhan_ibu_hamil_kek.*' => 'sometimes|numeric',
+            'presentasi_layanan_tambahan_asupan_gizi_bumil_kek' => 'required',
+            'presentasi_layanan_tambahan_asupan_gizi_bumil_kek.*' => 'sometimes|numeric',
+            'jml_ibu_hamil_konsum_tablet_min_90_tablet' => 'required',
+            'jml_ibu_hamil_konsum_tablet_min_90_tablet.*' => 'sometimes|numeric',
+            'jml_ibu_hamil_dapat_ttd' => 'required',
+            'jml_ibu_hamil_dapat_ttd.*' => 'sometimes|numeric',
+            'presentase_ibu_hamil_konsum_ttd_90_tablet_selama_hamil' => 'required',
+            'presentase_ibu_hamil_konsum_ttd_90_tablet_selama_hamil.*' => 'sometimes|numeric',
         ]);
         /**
          * Jika validasi gagal, kembali ke halaman sebelumnya dengan pesan error
@@ -107,6 +137,21 @@ class DinkesController extends Controller
                 'remaja_putri_status_anemia' => $request->remaja_putri_status_anemia[$i],
                 'jumlah_remaja_putri_dapat_pelayanan' => $request->jumlah_remaja_putri_dapat_pelayanan[$i],
                 'presentase_remaja_putri_anemia' => $request->presentase_remaja_putri_anemia[$i],
+                'remaja_putri_konsum_ttd' => $request->remaja_putri_konsum_ttd[$i],
+                'jml_remaja_putri_seluruh' => $request->jml_remaja_putri_seluruh[$i],
+                'presentasi_remaja_putri_konsum_ttd' => $request->presentasi_remaja_putri_konsum_ttd[$i],
+                'jml_calon_pengantin_dapat_ttd' => $request->jml_calon_pengantin_dapat_ttd[$i],
+                'jml_calon_pengantin_seluruh' => $request->jml_calon_pengantin_dapat_ttd[$i],
+                'presentase_calon_pengantin_terima_ttd_dlm_kurun_waktu_sama_pus1' => $request->presentase_calon_pengantin_terima_ttd_dlm_kurun_waktu_sama_pus1[$i],
+                'calon_pasangan_dapat_pemeriksaan_3bln_pranikah' => $request->calon_pasangan_dapat_pemeriksaan_3bln_pranikah[$i],
+                'jml_pasangan_yg_daftar_pranikah' => $request->jml_pasangan_yg_daftar_pranikah[$i],
+                'presentase_calon_pengantin_terima_ttd_dlm_kurun_waktu_sama_pus2' => $request->presentase_calon_pengantin_terima_ttd_dlm_kurun_waktu_sama_pus2[$i],
+                'jml_ibu_hamil_dapat_asupan_gizi_pmt' => $request->jml_ibu_hamil_dapat_asupan_gizi_pmt[$i],
+                'jml_keseluruhan_ibu_hamil_kek' => $request->jml_keseluruhan_ibu_hamil_kek[$i],
+                'presentasi_layanan_tambahan_asupan_gizi_bumil_kek' => $request->presentasi_layanan_tambahan_asupan_gizi_bumil_kek[$i],
+                'jml_ibu_hamil_konsum_tablet_min_90_tablet' => $request->jml_ibu_hamil_konsum_tablet_min_90_tablet[$i],
+                'jml_ibu_hamil_dapat_ttd' => $request->jml_ibu_hamil_dapat_ttd[$i],
+                'presentase_ibu_hamil_konsum_ttd_90_tablet_selama_hamil' => $request->presentase_ibu_hamil_konsum_ttd_90_tablet_selama_hamil[$i],
             ]);
         }
 

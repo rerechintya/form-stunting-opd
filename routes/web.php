@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DiskominfoController;
+use App\Http\Controllers\DisdikController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,4 +22,7 @@ Route::get('/', function() {
 Route::prefix('form')->group(function() {
     Route::get('/diskominfo', [DiskominfoController::class, 'index']);
     Route::post('/diskominfo/submit', [DiskominfoController::class, 'store']);
+
+    Route::get('/disdik', [DisdikController::class, 'index']);
+    Route::post('/disdik/submit', [DisdikController::class, 'store']);
 });

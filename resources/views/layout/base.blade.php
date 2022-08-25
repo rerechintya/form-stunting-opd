@@ -83,6 +83,12 @@
                     <span>Form Diskominfo</span></a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url('form/disdik') }}">
+                    <i class="fas fa-fw fa-clipboard"></i>
+                    <span>Form Dinas Pendidikan </span></a>
+            </li>
+
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 

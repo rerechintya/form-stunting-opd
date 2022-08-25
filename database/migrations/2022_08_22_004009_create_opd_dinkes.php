@@ -37,6 +37,21 @@ return new class extends Migration
             $table->string('remaja_putri_status_anemia')->nullable();
             $table->string('jumlah_remaja_putri_dapat_pelayanan')->nullable();
             $table->string('presentase_remaja_putri_anemia')->nullable();
+            $table->string('remaja_putri_konsum_ttd')->nullable();
+            $table->string('jml_remaja_putri_seluruh')->nullable();
+            $table->string('presentasi_remaja_putri_konsum_ttd')->nullable();
+            $table->string('jml_calon_pengantin_dapat_ttd')->nullable();
+            $table->string('jml_calon_pengantin_seluruh')->nullable();
+            $table->string('presentase_calon_pengantin_terima_ttd_dlm_kurun_waktu_sama_pus1')->nullable();
+            $table->string('calon_pasangan_dapat_pemeriksaan_3bln_pranikah')->nullable();
+            $table->string('jml_pasangan_yg_daftar_pranikah')->nullable();
+            $table->string('presentase_calon_pengantin_terima_ttd_dlm_kurun_waktu_sama_pus2')->nullable();
+            $table->string('jml_ibu_hamil_dapat_asupan_gizi_pmt')->nullable();
+            $table->string('jml_keseluruhan_ibu_hamil_kek')->nullable();
+            $table->string('presentasi_layanan_tambahan_asupan_gizi_bumil_kek')->nullable();
+            $table->string('jml_ibu_hamil_konsum_tablet_min_90_tablet')->nullable();
+            $table->string('jml_ibu_hamil_dapat_ttd')->nullable();
+            $table->string('presentase_ibu_hamil_konsum_ttd_90_tablet_selama_hamil')->nullable();
             $table->timestamps();
         });
     }

@@ -82,6 +82,18 @@
                     <i class="fas fa-fw fa-clipboard"></i>
                     <span>Form Diskominfo</span></a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url('form/dinsos') }}">
+                    <i class="fas fa-fw fa-clipboard"></i>
+                    <span>Form Dinsos</span></a>
+            </li>
+
+            <!-- Nav Item - Charts -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url('form/dinkes') }}">
+                    <i class="fas fa-fw fa-clipboard"></i>
+                    <span>Form Dinkes</span></a>
+            </li>
 
             <li class="nav-item">
                 <a class="nav-link" href="{{ url('form/disdik') }}">

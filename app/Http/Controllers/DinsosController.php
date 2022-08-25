@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dinsos;
+use App\Models\Kelurahan;
 use Illuminate\Http\Request;
 
 class DinsosController extends Controller
@@ -34,7 +36,7 @@ class DinsosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function show($id)
     {
         //
     }
@@ -45,17 +47,23 @@ class DinsosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function store(Request $request)
     {
         /**
          * Validasi kolom input yang akan diproses
          */
         $validation = $request->validate([
             'date' => 'required',
-            'terlaksana_kampanye_pencegahan_stunting' => 'required',
-            'keterangan_terlaksana_kampanye_pencegahan_stunting' => 'nullable|string',
             'kelurahan' => 'required',
             'kelurahan.*' => 'sometimes|numeric',
+            'Bantuan_PBI_kesehatan' => 'required',
+            'Bantuan_PBI_kesehatan.*' => 'sometimes|numeric',
+            'Jumlah_keluarga_miskin_rentan_bantuan_tunai' => 'required',
+            'Jumlah_keluarga_miskin_rentan_bantuan_tunai.*' => 'sometimes|numeric',
+            'Jumlah_keluarga_miskin_rentan_bantuan_sosial' => 'required',
+            'Jumlah_keluarga_miskin_rentan_bantuan_sosial.*' => 'sometimes|numeric',
+            'Jumlah_PKH_kesehatan_gizi' => 'required',
+            'Jumlah_PKH_kesehatan_gizi.*' => 'sometimes|numeric',
             'Pus_status_miskin_tunai' => 'required',
             'Pus_status_miskin_tunai.*' => 'sometimes|numeric',
             'Jumlah_pus5' => 'required',
@@ -103,7 +111,7 @@ class DinsosController extends Controller
          * Cek apakah ada data pada tahun dan bulan (periode) yang sama, jika ada maka data tidak dapat disimpan untuk menghindari data duplikat
          * Lalu kembali ke halaman sebelumnya dengan pesan error
          */
-        $existing_periode = Diskominfo::where('tahun', $tahun)->where('bulan', $bulan)->first();
+        $existing_periode = Dinsos::where('tahun', $tahun)->where('bulan', $bulan)->first();
         if ($existing_periode) {
             return back()->with('error', "Data pada periode yang sama ({$this->months[$bulan - 1]} {$tahun}) sudah ada, tidak dapat menyimpan data duplikat.")->withInput();
         }
@@ -111,24 +119,20 @@ class DinsosController extends Controller
         /**
          * Siapkan data yang berbentuk kolom isian status ya/tidak, contohnya pada OPD Diskominfo yaitu data pada sheet "Kominfo"
          */
-        $non_kelurahan_data = [
-            'tahun' => $tahun,
-            'bulan' => $bulan,
-            'terlaksana_kampanye_pencegahan_stunting' => $request->terlaksana_kampanye_pencegahan_stunting,
-            'keterangan_terlaksana_kampanye_pencegahan_stunting' => $request->keterangan_terlaksana_kampanye_pencegahan_stunting
-        ];
 
         /**
          * Siapkan data yang berbentuk per kelurahan, contohnya pada OPD Diskominfo yaitu data pada sheet "Kesehatan (Data Supply)"
          */
         $per_kelurahan_data = [];
-        for ($i = 0; $i < count($request->desa_kelurahan_melaksanakan_stbm); $i++) {
+        for ($i = 0; $i < count($request->Bantuan_PBI_kesehatan); $i++) {
             array_push($per_kelurahan_data, [
                 'tahun' => $tahun,
                 'bulan' => $bulan,
                 'kelurahan' => $request->kelurahan[$i],
-                'terlaksana_kampanye_pencegahan_stunting' => null,
-                'keterangan_terlaksana_kampanye_pencegahan_stunting' => null,
+                'Bantuan_PBI_kesehatan'=> $request->Bantuan_PBI_kesehatan[$i],
+                'Jumlah_keluarga_miskin_rentan_bantuan_tunai' => $request->Jumlah_keluarga_miskin_rentan_bantuan_tunai[$i],
+                'Jumlah_keluarga_miskin_rentan_bantuan_sosial' =>$request->Jumlah_keluarga_miskin_rentan_bantuan_sosial[$i],
+                'Jumlah_PKH_kesehatan_gizi' =>$request->Jumlah_PKH_kesehatan_gizi[$i],
                 'Pus_status_miskin_tunai' => $request->Pus_status_miskin_tunai[$i],
                 'Jumlah_pus5' => $request->Jumlah_pus5[$i],
                 'Presentasepus_tunai_BST_KJS' => $request->Presentasepus_tunai_BST_KJS[$i],
@@ -151,13 +155,13 @@ class DinsosController extends Controller
          * Submit data yang sudah disiapkan
          * Untuk data per kelurahan menggunakan perintah upsert untuk batch insert
          */
-        $non_kelurahan_insert = Diskominfo::create($non_kelurahan_data);
-        $per_kelurahan_insert = Diskominfo::upsert($per_kelurahan_data, []);
+        // $non_kelurahan_insert = Dinsos::create($non_kelurahan_data);
+        $per_kelurahan_insert = Dinsos::upsert($per_kelurahan_data, []);
 
         /**
          * Kembali ke halaman sebelumnya dengan pesan berhasil atau gagal
          */
-        if ($non_kelurahan_data && $per_kelurahan_data) return redirect('/form/diskominfo')->with('success', 'Data berhasil disimpan.');
+        if ($per_kelurahan_data) return redirect('/form/dinsos')->with('success', 'Data berhasil disimpan.');
 
         return back()->with('error', 'Gagal menyimpan data')->withInput();
 

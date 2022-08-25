@@ -23,8 +23,10 @@ return new class extends Migration
                   ->onUpdate('cascade')
                   ->onDelete('restrict');
             
-            $table->string('terlaksana_kampanye_pencegahan_stunting')->nullable();
-            $table->string('keterangan_terlaksana_kampanye_pencegahan_stunting')->nullable();
+            $table->integer('Bantuan_PBI_kesehatan')->nullable();
+            $table->integer('Jumlah_keluarga_miskin_rentan_bantuan_tunai')->nullable();
+            $table->integer('Jumlah_keluarga_miskin_rentan_bantuan_sosial')->nullable();
+            $table->integer('Jumlah_PKH_kesehatan_gizi')->nullable();
             $table->integer('Pus_status_miskin_tunai')->nullable();
             $table->integer('Jumlah_pus5')->nullable();
             $table->integer('Presentasepus_tunai_BST_KJS')->nullable();

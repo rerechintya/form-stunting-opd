@@ -33,12 +33,13 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ url('/form/diskominfo/submit') }}" method="POST">
+                    <form action="{{ url('/form/diskominfo/update') }}" method="POST">
                         @csrf
+                        <input type="hidden" name="id_report_non_kelurahan" value="{{ $report_non_kelurahan['id'] }}" readonly>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Bulan dan Tahun</label>
                             <div class="col-sm-2">
-                                <input type="month" class="form-control" name="date" value="{{ $report_non_kelurahan['tahun'] .'-'. $report_non_kelurahan['bulan'] }}">
+                                <input type="month" class="form-control" name="date" value="{{ $report_non_kelurahan['tahun'] .'-'. substr('0' . $report_non_kelurahan['bulan'], -2) }}">
                             </div>
                         </div>
 
@@ -118,6 +119,7 @@
                                                     <td>
                                                         {{ $kel->kelurahan }}
                                                         <input type="hidden" name="kelurahan[]" value="{{ $kel->id }}" readonly>
+                                                        <input type="hidden" name="id_report_kelurahan[]" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['id'] }}" readonly>
                                                     </td>
                                                     <td>
                                                         <input type="number" name="desa_kelurahan_melaksanakan_stbm[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['desa_kelurahan_melaksanakan_stbm'] }}">

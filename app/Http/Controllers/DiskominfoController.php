@@ -162,7 +162,7 @@ class DiskominfoController extends Controller
     public function update(Request $request, Diskominfo $diskominfo)
     {
         /**
-         * Validasi kolom input yang akan diproses
+         * Validasi kolom yang akan diproses
          */
         $validation = $request->validate([
             'date' => 'required',
@@ -211,6 +211,8 @@ class DiskominfoController extends Controller
 
         /**
          * Siapkan data yang berbentuk per kelurahan, contohnya pada OPD Diskominfo yaitu data pada sheet "Kesehatan (Data Supply)"
+         * Pada proses ini, tambahkan kolom id seperti yg dapat dilihat pada contoh di bawah
+         * Value untuk kolom id didapat dari hidden input pada form edit, silakan cek form edit dan cari textfield "id_report_kelurahan[]"
          */
         $per_kelurahan_data = [];
         for ($i = 0; $i < count($request->desa_kelurahan_melaksanakan_stbm); $i++) {
@@ -233,8 +235,14 @@ class DiskominfoController extends Controller
         }
 
         /**
-         * Submit data yang sudah disiapkan
-         * Untuk data per kelurahan menggunakan perintah upsert untuk batch insert
+         * Update data yang sudah disiapkan
+         * Untuk data non kelurahan (kolom isian ya/tidak) menggunakan perintah where lalu update
+         * Parameter id_report_non_kelurahan dapat dilihat pada form edit, silakan cek form edit dan cari textfield "id_report_non_kelurahan"
+         * Untuk data per kelurahan menggunakan perintah upsert untuk batch update, dengan 3 parameter
+         * Parameter pertama yaitu data yg sudah disiapkan dan akan diupdate
+         * Parameter kedua yaitu kolom yg harus bersifat unique (biarkan kosong)
+         * Parameter ketiga yaitu kolom yang perlu diupdate apabila ada data yg sama
+         * (silakan isikan sesuai dengan kolom pada OPD yang kalian kerjakan, kolom yg sama untuk semua OPD hanya tahun dan bulan)
          */
         $non_kelurahan_insert = Diskominfo::where('id', $request->id_report_non_kelurahan)->update($non_kelurahan_data);
         $per_kelurahan_insert = Diskominfo::upsert(
@@ -262,16 +270,5 @@ class DiskominfoController extends Controller
         if ($non_kelurahan_data && $per_kelurahan_data) return redirect('/form/diskominfo')->with('success', 'Data berhasil disimpan.');
 
         return back()->with('error', 'Gagal menyimpan data')->withInput();
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Diskominfo  $diskominfo
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Diskominfo $diskominfo)
-    {
-        //
     }
 }

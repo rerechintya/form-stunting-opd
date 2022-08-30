@@ -38,3 +38,10 @@ input[type=number] {
 .card-body.individual-question strong {
   padding-right: .4rem;
 }
+
+.table th {
+  position: sticky;
+  top: 0;
+  z-index: 99;
+  background-color: white;
+}

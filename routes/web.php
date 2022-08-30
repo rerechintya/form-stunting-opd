@@ -21,4 +21,5 @@ Route::get('/', function() {
 Route::prefix('form')->group(function() {
     Route::get('/diskominfo', [DiskominfoController::class, 'index']);
     Route::post('/diskominfo/submit', [DiskominfoController::class, 'store']);
+    Route::get('/diskominfo/{date}', [DiskominfoController::class, 'edit']);
 });

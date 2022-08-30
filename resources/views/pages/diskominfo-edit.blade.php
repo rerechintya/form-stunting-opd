@@ -1,14 +1,13 @@
 @extends('layout.base')
 
-@section('title', 'Form Diskominfo')
+@section('title', 'Edit Form Diskominfo')
 
 @section('main-content')
 
     <div class="row">
         <div class="col-12 d-flex flex-row align-items-center justify-content-between mb-4">
             <!-- Page Heading -->
-            <h1 class="h3 text-gray-800">Form Input Diskominfo</h1>
-            <button class="btn btn-outline-primary ml-4" data-toggle="modal" data-target="#form-history">Riwayat Input</button>
+            <h1 class="h3 text-gray-800">Form Edit Diskominfo</h1>
         </div>
         @if ($errors->any())
             <div class="col-12">
@@ -39,7 +38,7 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Bulan dan Tahun</label>
                             <div class="col-sm-2">
-                                <input type="month" class="form-control" name="date" value="{{ old('date') }}">
+                                <input type="month" class="form-control" name="date" value="{{ $report_non_kelurahan['tahun'] .'-'. $report_non_kelurahan['bulan'] }}">
                             </div>
                         </div>
 
@@ -66,17 +65,17 @@
                                             <span>
                                                 <strong>Status: </strong>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" value="ya" name="terlaksana_kampanye_pencegahan_stunting">
+                                                    <input class="form-check-input" type="radio" value="ya" name="terlaksana_kampanye_pencegahan_stunting" @if($report_non_kelurahan['terlaksana_kampanye_pencegahan_stunting'] == 'ya') checked @endif>
                                                     <label class="form-check-label">Ya</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" value="tidak" name="terlaksana_kampanye_pencegahan_stunting">
+                                                    <input class="form-check-input" type="radio" value="tidak" name="terlaksana_kampanye_pencegahan_stunting" @if($report_non_kelurahan['terlaksana_kampanye_pencegahan_stunting'] == 'tidak') checked @endif>
                                                     <label class="form-check-label">Tidak</label>
                                                 </div>
                                             </span>
                                             <span>
                                                 <strong>Keterangan:</strong>
-                                                <textarea name="keterangan_terlaksana_kampanye_pencegahan_stunting" class="form-control">{{ old('keterangan_terlaksana_kampanye_pencegahan_stunting') }}</textarea>
+                                                <textarea name="keterangan_terlaksana_kampanye_pencegahan_stunting" class="form-control">{{ $report_non_kelurahan['keterangan_terlaksana_kampanye_pencegahan_stunting'] }}</textarea>
                                             </span>
                                         </div>
                                     </div>
@@ -121,28 +120,28 @@
                                                         <input type="hidden" name="kelurahan[]" value="{{ $kel->id }}" readonly>
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="desa_kelurahan_melaksanakan_stbm[]" class="form-control" value="{{ old('desa_kelurahan_melaksanakan_stbm.'.$i-1) }}">
+                                                        <input type="number" name="desa_kelurahan_melaksanakan_stbm[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['desa_kelurahan_melaksanakan_stbm'] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="publikasi_tingkat_kabupaten_kota[]" class="form-control" value="{{ old('publikasi_tingkat_kabupaten_kota.'.$i-1) }}">
+                                                        <input type="number" name="publikasi_tingkat_kabupaten_kota[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['publikasi_tingkat_kabupaten_kota'] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="terselenggara_audit_baduta_stunting[]" class="form-control" value="{{ old('terselenggara_audit_baduta_stunting.'.$i-1) }}">
+                                                        <input type="number" name="terselenggara_audit_baduta_stunting[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['terselenggara_audit_baduta_stunting'] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="kabupaten_kota_mengimplementasi_surveilans_gizi_elektronik[]" class="form-control" value="{{ old('kabupaten_kota_mengimplementasi_surveilans_gizi_elektronik.'.$i-1) }}">
+                                                        <input type="number" name="kabupaten_kota_mengimplementasi_surveilans_gizi_elektronik[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['kabupaten_kota_mengimplementasi_surveilans_gizi_elektronik'] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="desa_kelurahan_terbebas_babs_odf[]" class="form-control" value="{{ old('desa_kelurahan_terbebas_babs_odf.'.$i-1) }}">
+                                                        <input type="number" name="desa_kelurahan_terbebas_babs_odf[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['desa_kelurahan_terbebas_babs_odf'] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="persentase_sasaran_pemahaman_stunting[]" class="form-control" value="{{ old('persentase_sasaran_pemahaman_stunting.'.$i-1) }}">
+                                                        <input type="number" name="persentase_sasaran_pemahaman_stunting[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['persentase_sasaran_pemahaman_stunting'] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="terpenuhi_standar_pemantauan_di_posyandu[]" class="form-control" value="{{ old('terpenuhi_standar_pemantauan_di_posyandu.'.$i-1) }}">
+                                                        <input type="number" name="terpenuhi_standar_pemantauan_di_posyandu[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['terpenuhi_standar_pemantauan_di_posyandu'] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="tersedia_bidan_desa_kelurahan[]" class="form-control" value="{{ old('tersedia_bidan_desa_kelurahan.'.$i-1) }}">
+                                                        <input type="number" name="tersedia_bidan_desa_kelurahan[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['tersedia_bidan_desa_kelurahan'] }}">
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -158,42 +157,4 @@
         </div>
     </div>
 
-@endsection
-
-@section('modal-section')
-    <div class="modal fade" id="form-history">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Riwayat Input</h5>
-                    <button class="close">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <table class="table table-bordered table-hover">
-                        <thead>
-                            <tr class="text-center">
-                                <th>No</th>
-                                <th>Bulan & Tahun</th>
-                                <th>Opsi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        @php
-                            $no = 1;
-                        @endphp
-                            @foreach ($report_history as $report)
-                                <tr class="text-center">
-                                    <td>{{ $no++ }}</td>
-                                    <td>{{ $months[$report->bulan - 1] . " " . $report->tahun }}</td>
-                                    <td>
-                                        <a class="btn btn-sm btn-outline-warning" href="{{ url('form/diskominfo/' . "$report->tahun-$report->bulan") }}">Lihat</a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Diskominfo;
 use App\Models\Kelurahan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DiskominfoController extends Controller
 {
@@ -18,7 +19,10 @@ class DiskominfoController extends Controller
     public function index()
     {
         $kelurahan = Kelurahan::all();
-        return view('pages.diskominfo', compact('kelurahan'));
+        $report_history = Diskominfo::select(DB::raw('ANY_VALUE(id), tahun, bulan'))->groupBy('bulan', 'tahun')->get();
+        extract(get_object_vars($this));
+
+        return view('pages.diskominfo', compact('kelurahan', 'report_history', 'months'));
     }
 
     /**
@@ -125,25 +129,27 @@ class DiskominfoController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Diskominfo  $diskominfo
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Diskominfo $diskominfo)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Diskominfo  $diskominfo
      * @return \Illuminate\Http\Response
      */
-    public function edit(Diskominfo $diskominfo)
+    public function edit(Diskominfo $diskominfo, $params)
     {
-        //
+        $periods = explode("-", $params);
+        $reports = Diskominfo::where('bulan', $periods[1])->where('tahun', $periods[0])->get()->toArray();
+        $kelurahan = Kelurahan::all();
+        $index_report_non_kelurahan = array_keys(array_column($reports, 'kelurahan'), null)[0];
+        $index_report_kelurahan = array_keys(array_column($reports, 'kelurahan'), !null);
+        $index_report_kelurahan = [
+            'start' => $index_report_kelurahan[0],
+            'end' => $index_report_kelurahan[count($index_report_kelurahan) - 1]
+        ];
+        $report_non_kelurahan = array_slice($reports, $index_report_non_kelurahan, 1)[0];
+        $report_kelurahan = array_slice($reports, $index_report_kelurahan['start'], $index_report_kelurahan['end']);
+        $column_kelurahan_only = array_column($report_kelurahan, 'kelurahan');
+        
+        return view('pages.diskominfo-edit', compact('kelurahan', 'report_non_kelurahan', 'report_kelurahan', 'column_kelurahan_only'));
     }
 
     /**

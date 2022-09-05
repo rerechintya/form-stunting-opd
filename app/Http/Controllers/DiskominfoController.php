@@ -19,7 +19,7 @@ class DiskominfoController extends Controller
     public function index()
     {
         $kelurahan = Kelurahan::all();
-        $report_history = Diskominfo::select(DB::raw('ANY_VALUE(id), tahun, bulan'))->groupBy('bulan', 'tahun')->get();
+        $report_history = Diskominfo::select(DB::raw('MAX(id), tahun, bulan'))->groupBy('bulan', 'tahun')->get();
         extract(get_object_vars($this));
 
         return view('pages.diskominfo', compact('kelurahan', 'report_history', 'months'));

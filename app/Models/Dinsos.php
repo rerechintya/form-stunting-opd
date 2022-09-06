@@ -15,8 +15,8 @@ class Dinsos extends Model
         'bulan',
         'kelurahan',
         // Sesuaikan dengan yg dideklarasikan di migration
-        'terlaksana_kampanye_pencegahan_stunting',
-        'keterangan_terlaksana_kampanye_pencegahan_stunting',
+        // 'terlaksana_kampanye_pencegahan_stunting',
+        // 'keterangan_terlaksana_kampanye_pencegahan_stunting',
         'Bantuan_PBI_kesehatan' ,
         'Jumlah_keluarga_miskin_rentan_bantuan_tunai',
         'Jumlah_keluarga_miskin_rentan_bantuan_sosial',

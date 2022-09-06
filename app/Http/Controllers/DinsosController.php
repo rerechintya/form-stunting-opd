@@ -124,7 +124,10 @@ class DinsosController extends Controller
         /**
          * Siapkan data yang berbentuk kolom isian status ya/tidak, contohnya pada OPD Diskominfo yaitu data pada sheet "Kominfo"
          */
-
+        $non_kelurahan_data = [
+            'tahun' => $tahun,
+            'bulan' => $bulan,
+        ];
         /**
          * Siapkan data yang berbentuk per kelurahan, contohnya pada OPD Diskominfo yaitu data pada sheet "Kesehatan (Data Supply)"
          */
@@ -160,13 +163,13 @@ class DinsosController extends Controller
          * Submit data yang sudah disiapkan
          * Untuk data per kelurahan menggunakan perintah upsert untuk batch insert
          */
-        // $non_kelurahan_insert = Dinsos::create($non_kelurahan_data);
+        $non_kelurahan_insert = Dinsos::create($non_kelurahan_data);
         $per_kelurahan_insert = Dinsos::upsert($per_kelurahan_data, []);
 
         /**
          * Kembali ke halaman sebelumnya dengan pesan berhasil atau gagal
          */
-        if ($per_kelurahan_data) return redirect('/form/dinsos')->with('success', 'Data berhasil disimpan.');
+        if ($non_kelurahan_data && $per_kelurahan_data) return redirect('/form/dinsos')->with('success', 'Data berhasil disimpan.');
 
         return back()->with('error', 'Gagal menyimpan data')->withInput();
 
@@ -190,10 +193,11 @@ class DinsosController extends Controller
             'start' => $index_report_kelurahan[0],
             'end' => $index_report_kelurahan[count($index_report_kelurahan) - 1]
         ];
+        $report_non_kelurahan = array_slice($reports, $index_report_non_kelurahan, 1)[0];
         $report_kelurahan = array_slice($reports, $index_report_kelurahan['start'], $index_report_kelurahan['end']);
         $column_kelurahan_only = array_column($report_kelurahan, 'kelurahan');
         
-        return view('pages.dinsos-edit', compact('kelurahan', 'report_kelurahan', 'column_kelurahan_only'));
+        return view('pages.dinsos-edit', compact('kelurahan', 'report_non_kelurahan', 'report_kelurahan', 'column_kelurahan_only'));
     }
 
     /**
@@ -203,7 +207,7 @@ class DinsosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Dinsos $dinsos)
     {
         //
         $validation = $request->validate([
@@ -264,12 +268,10 @@ class DinsosController extends Controller
         /**
          * Siapkan data yang berbentuk kolom isian status ya/tidak, contohnya pada OPD Diskominfo yaitu data pada sheet "Kominfo"
          */
-        // $non_kelurahan_data = [
-        //     'tahun' => $tahun,
-        //     'bulan' => $bulan,
-        //     'terlaksana_kampanye_pencegahan_stunting' => $request->terlaksana_kampanye_pencegahan_stunting,
-        //     'keterangan_terlaksana_kampanye_pencegahan_stunting' => $request->keterangan_terlaksana_kampanye_pencegahan_stunting
-        // ];
+        $non_kelurahan_data = [
+            'tahun' => $tahun,
+            'bulan' => $bulan,
+        ];
 
         /**
          * Siapkan data yang berbentuk per kelurahan, contohnya pada OPD Diskominfo yaitu data pada sheet "Kesehatan (Data Supply)"
@@ -277,7 +279,7 @@ class DinsosController extends Controller
          * Value untuk kolom id didapat dari hidden input pada form edit, silakan cek form edit dan cari textfield "id_report_kelurahan[]"
          */
         $per_kelurahan_data = [];
-        for ($i = 0; $i < count($request->desa_kelurahan_melaksanakan_stbm); $i++) {
+        for ($i = 0; $i < count($request->Bantuan_PBI_kesehatan); $i++) {
             array_push($per_kelurahan_data, [
                 'id' => $request->id_report_kelurahan[$i],
                 'tahun' => $tahun,
@@ -315,8 +317,8 @@ class DinsosController extends Controller
          * Parameter ketiga yaitu kolom yang perlu diupdate apabila ada data yg sama
          * (silakan isikan sesuai dengan kolom pada OPD yang kalian kerjakan, kolom yg sama untuk semua OPD hanya tahun dan bulan)
          */
-        // $non_kelurahan_insert = Diskominfo::where('id', $request->id_report_non_kelurahan)->update($non_kelurahan_data);
-        $per_kelurahan_insert = Diskominfo::upsert(
+        $non_kelurahan_insert = Dinsos::where('id', $request->id_report_non_kelurahan)->update($non_kelurahan_data);
+        $per_kelurahan_insert = Dinsos::upsert(
             $per_kelurahan_data,
             [],
             [
@@ -347,7 +349,7 @@ class DinsosController extends Controller
         /**
          * Kembali ke halaman sebelumnya dengan pesan berhasil atau gagal
          */
-        if ($per_kelurahan_data) return redirect('/form/dinsos')->with('success', 'Data berhasil disimpan.');
+        if ($non_kelurahan_data && $per_kelurahan_data) return redirect('/form/dinsos')->with('success', 'Data berhasil disimpan.');
 
         return back()->with('error', 'Gagal menyimpan data')->withInput();
     }

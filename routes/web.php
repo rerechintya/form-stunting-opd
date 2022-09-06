@@ -39,4 +39,7 @@ Route::prefix('form')->group(function() {
     Route::get('/diskominfo/{date}', [DiskominfoController::class, 'edit']);
     Route::post('/diskominfo/update', [DiskominfoController::class, 'update']);
 
+    Route::get('/dinsos/{date}', [DinsosController::class, 'edit']);
+    Route::post('/dinsos/update', [DinsosController::class, 'update']);
+
 });

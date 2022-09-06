@@ -35,6 +35,7 @@
                 <div class="card-body">
                     <form action="{{ url('/form/dinsos/update') }}" method="POST">
                         @csrf
+                        <input type="hidden" name="id_report_non_kelurahan" value="{{ $report_non_kelurahan['id'] }}" readonly>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Bulan dan Tahun</label>
                             <div class="col-sm-2">

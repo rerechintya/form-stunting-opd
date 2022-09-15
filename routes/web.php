@@ -26,7 +26,6 @@ Route::prefix('form')->group(function() {
     Route::get('/diskominfo', [DiskominfoController::class, 'index']);
     Route::post('/diskominfo/submit', [DiskominfoController::class, 'store']);
 
-
     Route::get('/disdik', [DisdikController::class, 'index']);
     Route::post('/disdik/submit', [DisdikController::class, 'store']);
 
@@ -36,12 +35,14 @@ Route::prefix('form')->group(function() {
     Route::get('/dinsos', [DinsosController::class, 'index']);
     Route::post('/dinsos/submit', [DinsosController::class, 'store']);
 
-<<<<<<< Updated upstream
-=======
+    Route::get('/disdik/{date}', [DisdikController::class, 'edit']);
+    Route::post('/disdik/update', [DisdikController::class, 'update']);
+
     Route::get('/diskominfo/{date}', [DiskominfoController::class, 'edit']);
     Route::post('/diskominfo/update', [DiskominfoController::class, 'update']);
 
-    Route::get('/disdik/{date}', [DisdikController::class, 'edit']);
-    Route::post('/disdik/update', [DisdikController::class, 'update']);
->>>>>>> Stashed changes
+    Route::get('/dinsos/{date}', [DinsosController::class, 'edit']);
+    Route::post('/dinsos/update', [DinsosController::class, 'update']);
+
+
 });

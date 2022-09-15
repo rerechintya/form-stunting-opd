@@ -25,7 +25,7 @@ Route::get('/', function() {
 Route::prefix('form')->group(function() {
     Route::get('/diskominfo', [DiskominfoController::class, 'index']);
     Route::post('/diskominfo/submit', [DiskominfoController::class, 'store']);
-
+    
     Route::get('/disdik', [DisdikController::class, 'index']);
     Route::post('/disdik/submit', [DisdikController::class, 'store']);
 
@@ -43,6 +43,7 @@ Route::prefix('form')->group(function() {
 
     Route::get('/dinsos/{date}', [DinsosController::class, 'edit']);
     Route::post('/dinsos/update', [DinsosController::class, 'update']);
-
-
+    
+    Route::get('/dinkes{date}', [DinkesController::class, 'edit']);
+    Route::post('/dinkes/update', [DinkesController::class, 'update']);
 });

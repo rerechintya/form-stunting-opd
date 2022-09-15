@@ -1,14 +1,13 @@
 @extends('layout.base')
 
-@section('title', 'Form Dinkes')
+@section('title', 'Edit Form Dinkes')
 
 @section('main-content')
 
     <div class="row">
         <div class="col-12 d-flex flex-row align-items-center justify-content-between mb-4">
             <!-- Page Heading -->
-            <h1 class="h3 text-gray-800">Form Input Dinkes</h1>
-            <button class="btn btn-outline-primary ml-4" data-toggle="modal" data-target="#form-history">Riwayat Input</button>
+            <h1 class="h3 text-gray-800">Form Edit Dinkes</h1>
         </div>
         @if ($errors->any())
             <div class="col-12">
@@ -34,12 +33,12 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ url('/form/dinkes/submit') }}" method="POST">
+                    <form action="{{ url('/form/dinkes/update') }}" method="POST">
                         @csrf
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Bulan dan Tahun</label>
                             <div class="col-sm-2">
-                                <input type="month" class="form-control" name="date" value="{{ old('date') }}">
+                                <input type="month" class="form-control" name="date" value="{{ $report_non_kelurahan['tahun'] .'-'. substr('0' . $report_non_kelurahan['bulan'], -2) }}">
                             </div>
                         </div>
 
@@ -134,30 +133,31 @@
                                                     <td>
                                                         {{ $kel->kelurahan }}
                                                         <input type="hidden" name="kelurahan[]" value="{{ $kel->id }}" readonly>
+                                                        <input type="hidden" name="id_report_kelurahan[]" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['id'] }}" readonly>
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="desa_kelurahan_melaksanakan_stbm[]" class="form-control" value="{{ old('desa_kelurahan_melaksanakan_stbm.'.$i-1) }}">
+                                                        <input type="number" name="desa_kelurahan_melaksanakan_stbm[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['desa_kelurahan_melaksanakan_stbm'] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="publikasi_tingkat_kabupaten_kota[]" class="form-control" value="{{ old('publikasi_tingkat_kabupaten_kota.'.$i-1) }}">
+                                                        <input type="number" name="publikasi_tingkat_kabupaten_kota[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['publikasi_tingkat_kabupaten_kota'] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="terselenggara_audit_baduta_stunting[]" class="form-control" value="{{ old('terselenggara_audit_baduta_stunting.'.$i-1) }}">
+                                                        <input type="number" name="terselenggara_audit_baduta_stunting[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['terselenggara_audit_baduta_stunting'] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="kabupaten_kota_mengimplementasi_surveilans_gizi_elektronik[]" class="form-control" value="{{ old('kabupaten_kota_mengimplementasi_surveilans_gizi_elektronik.'.$i-1) }}">
+                                                        <input type="number" name="kabupaten_kota_mengimplementasi_surveilans_gizi_elektronik[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['kabupaten_kota_mengimplementasi_surveilans_gizi_elektronik'] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="desa_kelurahan_terbebas_babs_odf[]" class="form-control" value="{{ old('desa_kelurahan_terbebas_babs_odf.'.$i-1) }}">
+                                                        <input type="number" name="desa_kelurahan_terbebas_babs_odf[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['desa_kelurahan_terbebas_babs_odf'] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="persentase_sasaran_pemahaman_stunting[]" class="form-control" value="{{ old('persentase_sasaran_pemahaman_stunting.'.$i-1) }}">
+                                                        <input type="number" name="persentase_sasaran_pemahaman_stunting[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['persentase_sasaran_pemahaman_stunting'] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="terpenuhi_standar_pemantauan_di_posyandu[]" class="form-control" value="{{ old('terpenuhi_standar_pemantauan_di_posyandu.'.$i-1) }}">
+                                                        <input type="number" name="terpenuhi_standar_pemantauan_di_posyandu[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['terpenuhi_standar_pemantauan_di_posyandu'] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="tersedia_bidan_desa_kelurahan[]" class="form-control" value="{{ old('tersedia_bidan_desa_kelurahan.'.$i-1) }}">
+                                                        <input type="number" name="tersedia_bidan_desa_kelurahan[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['tersedia_bidan_desa_kelurahan'] }}">
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -173,7 +173,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <div class="table-responsive" style="max-height: 90vhh; overflow: scroll">
+                                <div class="table-responsive" style="max-height: 90vh; overflow: scroll">
                                     <table class="table table-striped table-bordered table-hover table-form">
                                         <thead>
                                             <tr>
@@ -194,15 +194,16 @@
                                                     <td>
                                                         {{ $kel->kelurahan }}
                                                         <input type="hidden" name="kelurahan[]" value="{{ $kel->id }}" readonly>
+                                                        <input type="hidden" name="id_report_kelurahan[]" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['id'] }}" readonly>
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="jumlah_balita[]" class="form-control" value="{{ old('jumlah_balita.'.$i-1) }}">
+                                                        <input type="number" name="jumlah_balita[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['jumlah_balita'] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="jumlah_balita_sangat_pendek[]" class="form-control" value="{{ old('jumlah_balita_sangat_pendek.'.$i-1) }}">
+                                                        <input type="number" name="jumlah_balita_sangat_pendek[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['jumlah_balita_sangat_pendek'] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="jumlah_balita_pendek[]" class="form-control" value="{{ old('jumlah_balita_pendek.'.$i-1) }}">
+                                                        <input type="number" name="jumlah_balita_pendek[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['jumlah_balita_pendek'] }}">
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -218,7 +219,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <div class="table-responsive" style="max-height: 90vhh; overflow: scroll">
+                                <div class="table-responsive" style="max-height: 90vh; overflow: scroll">
                                     <table class="table table-striped table-bordered table-hover table-form">
                                         <thead>
                                             <tr>
@@ -243,15 +244,16 @@
                                                     <td>
                                                         {{ $kel->kelurahan }}
                                                         <input type="hidden" name="kelurahan[]" value="{{ $kel->id }}" readonly>
+                                                        <input type="hidden" name="id_report_kelurahan[]" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['id'] }}" readonly>
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="remaja_putri_status_anemia[]" class="form-control" value="{{ old('remaja_putri_status_anemia.'.$i-1) }}">
+                                                        <input type="number" name="remaja_putri_status_anemia[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['remaja_putri_status_anemia'] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="jumlah_remaja_putri_dapat_pelayanan[]" class="form-control" value="{{ old('jumlah_remaja_putri_dapat_pelayanan.'.$i-1) }}">
+                                                        <input type="number" name="jumlah_remaja_putri_dapat_pelayanan[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['jumlah_remaja_putri_dapat_pelayanan'] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="presentase_remaja_putri_anemia[]" class="form-control" value="{{ old('presentase_remaja_putri_anemia.'.$i-1) }}">
+                                                        <input type="number" name="presentase_remaja_putri_anemia[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['presentase_remaja_putri_anemia'] }}">
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -267,7 +269,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <div class="table-responsive" style="max-height: 90vhh; overflow: scroll">
+                                <div class="table-responsive" style="max-height: 90vh; overflow: scroll">
                                     <table class="table table-striped table-bordered table-hover table-form">
                                         <thead>
                                             <tr>
@@ -292,15 +294,16 @@
                                                     <td>
                                                         {{ $kel->kelurahan }}
                                                         <input type="hidden" name="kelurahan[]" value="{{ $kel->id }}" readonly>
+                                                        <input type="hidden" name="id_report_kelurahan[]" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['id'] }}" readonly>
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="remaja_putri_konsum_ttd[]" class="form-control" value="{{ old('remaja_putri_konsum_ttd.'.$i-1) }}">
+                                                        <input type="number" name="remaja_putri_konsum_ttd[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['remaja_putri_konsum_ttd'] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="jml_remaja_putri_seluruh[]" class="form-control" value="{{ old('jml_remaja_putri_seluruh.'.$i-1) }}">
+                                                        <input type="number" name="jml_remaja_putri_seluruh[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['jml_remaja_putri_seluruh'] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="presentasi_remaja_putri_konsum_ttd[]" class="form-control" value="{{ old('presentasi_remaja_putri_konsum_ttd.'.$i-1) }}">
+                                                        <input type="number" name="presentasi_remaja_putri_konsum_ttd[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['presentasi_remaja_putri_konsum_ttd'] }}">
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -316,7 +319,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <div class="table-responsive" style="max-height: 90vhh; overflow: scroll">
+                                <div class="table-responsive" style="max-height: 90vh; overflow: scroll">
                                     <table class="table table-striped table-bordered table-hover table-form">
                                         <thead>
                                             <tr>
@@ -341,15 +344,16 @@
                                                     <td>
                                                         {{ $kel->kelurahan }}
                                                         <input type="hidden" name="kelurahan[]" value="{{ $kel->id }}" readonly>
+                                                        <input type="hidden" name="id_report_kelurahan[]" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['id'] }}" readonly>
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="jml_calon_pengantin_dapat_ttd[]" class="form-control" value="{{ old('jml_calon_pengantin_dapat_ttd.'.$i-1) }}">
+                                                        <input type="number" name="jml_calon_pengantin_dapat_ttd[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['jml_calon_pengantin_dapat_ttd'] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="jml_calon_pengantin_seluruh[]" class="form-control" value="{{ old('jml_calon_pengantin_seluruh.'.$i-1) }}">
+                                                        <input type="number" name="jml_calon_pengantin_seluruh[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['jml_calon_pengantin_seluruh'] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="presentase_calon_pengantin_terima_ttd_dlm_kurun_waktu_sama_pus1[]" class="form-control" value="{{ old('presentase_calon_pengantin_terima_ttd_dlm_kurun_waktu_sama_pus1.'.$i-1) }}">
+                                                        <input type="number" name="presentase_calon_pengantin_terima_ttd_dlm_kurun_waktu_sama_pus1[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['presentase_calon_pengantin_terima_ttd_dlm_kurun_waktu_sama_pus1'] }}">
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -365,7 +369,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <div class="table-responsive" style="max-height: 90vhh; overflow: scroll">
+                                <div class="table-responsive" style="max-height: 90vh; overflow: scroll">
                                     <table class="table table-striped table-bordered table-hover table-form">
                                         <thead>
                                             <tr>
@@ -390,15 +394,16 @@
                                                     <td>
                                                         {{ $kel->kelurahan }}
                                                         <input type="hidden" name="kelurahan[]" value="{{ $kel->id }}" readonly>
+                                                        <input type="hidden" name="id_report_kelurahan[]" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['id'] }}" readonly>
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="calon_pasangan_dapat_pemeriksaan_3bln_pranikah[]" class="form-control" value="{{ old('calon_pasangan_dapat_pemeriksaan_3bln_pranikah.'.$i-1) }}">
+                                                        <input type="number" name="calon_pasangan_dapat_pemeriksaan_3bln_pranikah[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['calon_pasangan_dapat_pemeriksaan_3bln_pranikah'] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="jml_pasangan_yg_daftar_pranikah[]" class="form-control" value="{{ old('jml_pasangan_yg_daftar_pranikah.'.$i-1) }}">
+                                                        <input type="number" name="jml_pasangan_yg_daftar_pranikah[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['jml_pasangan_yg_daftar_pranikah'] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="presentase_calon_pengantin_terima_ttd_dlm_kurun_waktu_sama_pus2[]" class="form-control" value="{{ old('presentase_calon_pengantin_terima_ttd_dlm_kurun_waktu_sama_pus2.'.$i-1) }}">
+                                                        <input type="number" name="presentase_calon_pengantin_terima_ttd_dlm_kurun_waktu_sama_pus2[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['presentase_calon_pengantin_terima_ttd_dlm_kurun_waktu_sama_pus2'] }}">
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -414,7 +419,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <div class="table-responsive" style="max-height: 90vhh; overflow: scroll">
+                                <div class="table-responsive" style="max-height: 90vh; overflow: scroll">
                                     <table class="table table-striped table-bordered table-hover table-form">
                                         <thead>
                                             <tr>
@@ -439,15 +444,16 @@
                                                     <td>
                                                         {{ $kel->kelurahan }}
                                                         <input type="hidden" name="kelurahan[]" value="{{ $kel->id }}" readonly>
+                                                        <input type="hidden" name="id_report_kelurahan[]" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['id'] }}" readonly>
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="jml_ibu_hamil_dapat_asupan_gizi_pmt[]" class="form-control" value="{{ old('jml_ibu_hamil_dapat_asupan_gizi_pmt.'.$i-1) }}">
+                                                        <input type="number" name="jml_ibu_hamil_dapat_asupan_gizi_pmt[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['jml_ibu_hamil_dapat_asupan_gizi_pmt'] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="jml_keseluruhan_ibu_hamil_kek[]" class="form-control" value="{{ old('jml_keseluruhan_ibu_hamil_kek.'.$i-1) }}">
+                                                        <input type="number" name="jml_keseluruhan_ibu_hamil_kek[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['jml_keseluruhan_ibu_hamil_kek'] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="presentasi_layanan_tambahan_asupan_gizi_bumil_kek[]" class="form-control" value="{{ old('presentasi_layanan_tambahan_asupan_gizi_bumil_kek.'.$i-1) }}">
+                                                        <input type="number" name="presentasi_layanan_tambahan_asupan_gizi_bumil_kek[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['presentasi_layanan_tambahan_asupan_gizi_bumil_kek'] }}">
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -463,7 +469,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <div class="table-responsive" style="max-height: 90vhh; overflow: scroll">
+                                <div class="table-responsive" style="max-height: 90vh; overflow: scroll">
                                     <table class="table table-striped table-bordered table-hover table-form">
                                         <thead>
                                             <tr>
@@ -488,15 +494,16 @@
                                                     <td>
                                                         {{ $kel->kelurahan }}
                                                         <input type="hidden" name="kelurahan[]" value="{{ $kel->id }}" readonly>
+                                                        <input type="hidden" name="id_report_kelurahan[]" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['id'] }}" readonly>
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="jml_ibu_hamil_konsum_tablet_min_90_tablet[]" class="form-control" value="{{ old('jml_ibu_hamil_konsum_tablet_min_90_tablet.'.$i-1) }}">
+                                                        <input type="number" name="jml_ibu_hamil_konsum_tablet_min_90_tablet[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['jml_ibu_hamil_konsum_tablet_min_90_tablet'] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="jml_ibu_hamil_dapat_ttd[]" class="form-control" value="{{ old('jml_ibu_hamil_dapat_ttd.'.$i-1) }}">
+                                                        <input type="number" name="jml_ibu_hamil_dapat_ttd[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['jml_ibu_hamil_dapat_ttd'] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="presentase_ibu_hamil_konsum_ttd_90_tablet_selama_hamil[]" class="form-control" value="{{ old('presentase_ibu_hamil_konsum_ttd_90_tablet_selama_hamil.'.$i-1) }}">
+                                                        <input type="number" name="presentase_ibu_hamil_konsum_ttd_90_tablet_selama_hamil[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['presentase_ibu_hamil_konsum_ttd_90_tablet_selama_hamil'] }}">
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -512,7 +519,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <div class="table-responsive" style="max-height: 90vhh; overflow: scroll">
+                                <div class="table-responsive" style="max-height: 90vh; overflow: scroll">
                                     <table class="table table-striped table-bordered table-hover table-form">
                                         <thead>
                                             <tr>
@@ -537,15 +544,16 @@
                                                     <td>
                                                         {{ $kel->kelurahan }}
                                                         <input type="hidden" name="kelurahan[]" value="{{ $kel->id }}" readonly>
+                                                        <input type="hidden" name="id_report_kelurahan[]" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['id'] }}" readonly>
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="jml_bayi_krg_6_bulan_dapat_asi_ekslusif[]" class="form-control" value="{{ old('jml_bayi_krg_6_bulan_dapat_asi_ekslusif.'.$i-1) }}">
+                                                        <input type="number" name="jml_bayi_krg_6_bulan_dapat_asi_ekslusif[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['jml_bayi_krg_6_bulan_dapat_asi_ekslusif'] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="jml_seluruh_bayi_krg_6_bulan[]" class="form-control" value="{{ old('jml_seluruh_bayi_krg_6_bulan.'.$i-1) }}">
+                                                        <input type="number" name="jml_seluruh_bayi_krg_6_bulan[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['jml_seluruh_bayi_krg_6_bulan'] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="presentase_bayi_dapat_asi_krg_6_bulan[]" class="form-control" value="{{ old('presentase_bayi_dapat_asi_krg_6_bulan.'.$i-1) }}">
+                                                        <input type="number" name="presentase_bayi_dapat_asi_krg_6_bulan[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['presentase_bayi_dapat_asi_krg_6_bulan'] }}">
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -561,7 +569,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <div class="table-responsive" style="max-height: 90vhh; overflow: scroll">
+                                <div class="table-responsive" style="max-height: 90vh; overflow: scroll">
                                     <table class="table table-striped table-bordered table-hover table-form">
                                         <thead>
                                             <tr>
@@ -586,15 +594,16 @@
                                                     <td>
                                                         {{ $kel->kelurahan }}
                                                         <input type="hidden" name="kelurahan[]" value="{{ $kel->id }}" readonly>
+                                                        <input type="hidden" name="id_report_kelurahan[]" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['id'] }}" readonly>
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="jml_anak_usia_6_23_bulan_dapat_makanan_pedamping_asi[]" class="form-control" value="{{ old('jml_anak_usia_6_23_bulan_dapat_makanan_pedamping_asi.'.$i-1) }}">
+                                                        <input type="number" name="jml_anak_usia_6_23_bulan_dapat_makanan_pedamping_asi[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['jml_anak_usia_6_23_bulan_dapat_makanan_pedamping_asi'] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="jml_anak_usia_6_23_bulan_seluruh[]" class="form-control" value="{{ old('jml_anak_usia_6_23_bulan_seluruh.'.$i-1) }}">
+                                                        <input type="number" name="jml_anak_usia_6_23_bulan_seluruh[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['jml_anak_usia_6_23_bulan_seluruh'] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="presentase_anak_usia_6_23_bulan_dapat_mpasi[]" class="form-control" value="{{ old('presentase_anak_usia_6_23_bulan_dapat_mpasi.'.$i-1) }}">
+                                                        <input type="number" name="presentase_anak_usia_6_23_bulan_dapat_mpasi[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['jml_anak_usia_6_23_bulan_seluruh'] }}">
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -610,7 +619,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <div class="table-responsive" style="max-height: 90vhh; overflow: scroll">
+                                <div class="table-responsive" style="max-height: 90vh; overflow: scroll">
                                     <table class="table table-striped table-bordered table-hover table-form">
                                         <thead>
                                             <tr>
@@ -635,15 +644,16 @@
                                                     <td>
                                                         {{ $kel->kelurahan }}
                                                         <input type="hidden" name="kelurahan[]" value="{{ $kel->id }}" readonly>
+                                                        <input type="hidden" name="id_report_kelurahan[]" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['id'] }}" readonly>
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="jml_anak_balita_yg_dapat_layanan_gizi_buruk[]" class="form-control" value="{{ old('jml_anak_balita_yg_dapat_layanan_gizi_buruk.'.$i-1) }}">
+                                                        <input type="number" name="jml_anak_balita_yg_dapat_layanan_gizi_buruk[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['jml_anak_balita_yg_dapat_layanan_gizi_buruk'] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="jml_seluruh_balita_gizi_buruk[]" class="form-control" value="{{ old('jml_seluruh_balita_gizi_buruk.'.$i-1) }}">
+                                                        <input type="number" name="jml_seluruh_balita_gizi_buruk[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['jml_seluruh_balita_gizi_buruk'] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="presentase_layanan_gizi_buruk_thdp_balita[]" class="form-control" value="{{ old('presentase_layanan_gizi_buruk_thdp_balita.'.$i-1) }}">
+                                                        <input type="number" name="presentase_layanan_gizi_buruk_thdp_balita[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['presentase_layanan_gizi_buruk_thdp_balita'] }}">
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -659,7 +669,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <div class="table-responsive" style="max-height: 90vhh; overflow: scroll">
+                                <div class="table-responsive" style="max-height: 90vh; overflow: scroll">
                                     <table class="table table-striped table-bordered table-hover table-form">
                                         <thead>
                                             <tr>
@@ -684,15 +694,16 @@
                                                     <td>
                                                         {{ $kel->kelurahan }}
                                                         <input type="hidden" name="kelurahan[]" value="{{ $kel->id }}" readonly>
+                                                        <input type="hidden" name="id_report_kelurahan[]" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['id'] }}" readonly>
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="balita_yg_dipantau_tumbuh_kembang[]" class="form-control" value="{{ old('balita_yg_dipantau_tumbuh_kembang.'.$i-1) }}">
+                                                        <input type="number" name="balita_yg_dipantau_tumbuh_kembang[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['balita_yg_dipantau_tumbuh_kembang'] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="jml_seluruh_balita_balita4[]" class="form-control" value="{{ old('jml_seluruh_balita_balita4.'.$i-1) }}">
+                                                        <input type="number" name="jml_seluruh_balita_balita4[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['jml_seluruh_balita_balita4'] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="presentase_layanan_pantau_tumbuh_kembang_balita[]" class="form-control" value="{{ old('presentase_layanan_pantau_tumbuh_kembang_balita.'.$i-1) }}">
+                                                        <input type="number" name="presentase_layanan_pantau_tumbuh_kembang_balita[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['presentase_layanan_pantau_tumbuh_kembang_balita'] }}">
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -708,7 +719,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <div class="table-responsive" style="max-height: 90vhh; overflow: scroll">
+                                <div class="table-responsive" style="max-height: 90vh; overflow: scroll">
                                     <table class="table table-striped table-bordered table-hover table-form">
                                         <thead>
                                             <tr>
@@ -735,13 +746,13 @@
                                                         <input type="hidden" name="kelurahan[]" value="{{ $kel->id }}" readonly>
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="jml_balita_dapat_asupan_gizi[]" class="form-control" value="{{ old('jml_balita_dapat_asupan_gizi.'.$i-1) }}">
+                                                        <input type="number" name="jml_balita_dapat_asupan_gizi[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['jml_balita_dapat_asupan_gizi'] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="jml_seluruh_balita_gizi_kurang[]" class="form-control" value="{{ old('jml_seluruh_balita_gizi_kurang.'.$i-1) }}">
+                                                        <input type="number" name="jml_seluruh_balita_gizi_kurang[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['jml_seluruh_balita_gizi_kurang'] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="presentase_layanan_asupan_gizi_thdp_balita[]" class="form-control" value="{{ old('presentase_layanan_asupan_gizi_thdp_balita.'.$i-1) }}">
+                                                        <input type="number" name="presentase_layanan_asupan_gizi_thdp_balita[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['presentase_layanan_asupan_gizi_thdp_balita'] }}">
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -757,7 +768,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <div class="table-responsive" style="max-height: 90vhh; overflow: scroll">
+                                <div class="table-responsive" style="max-height: 90vh; overflow: scroll">
                                     <table class="table table-striped table-bordered table-hover table-form">
                                         <thead>
                                             <tr>
@@ -777,13 +788,13 @@
                                                     <td class="text-center">{{ ($i++) + 1 }}</td>
                                                     <td>{{ $kel->parent_kecamatan->kecamatan }}</td>
                                                     <td>
-                                                        <input type="number" name="balita_peroleh_imunisasi_lengkap[]" class="form-control" value="{{ old('balita_peroleh_imunisasi_lengkap.'.$i-1) }}">
+                                                        <input type="number" name="balita_peroleh_imunisasi_lengkap[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['balita_peroleh_imunisasi_lengkap'] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="jml_seluruh_balita_balita6[]" class="form-control" value="{{ old('jml_seluruh_balita_balita6.'.$i-1) }}">
+                                                        <input type="number" name="jml_seluruh_balita_balita6[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['jml_seluruh_balita_balita6'] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="presentase_layanan_imunisasi_lengkap_balita[]" class="form-control" value="{{ old('presentase_layanan_imunisasi_lengkap_balita.'.$i-1) }}">
+                                                        <input type="number" name="presentase_layanan_imunisasi_lengkap_balita[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['presentase_layanan_imunisasi_lengkap_balita'] }}">
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -799,7 +810,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <div class="table-responsive" style="max-height: 90vhh; overflow: scroll">
+                                <div class="table-responsive" style="max-height: 90vh; overflow: scroll">
                                     <table class="table table-striped table-bordered table-hover table-form">
                                         <thead>
                                             <tr>
@@ -826,13 +837,13 @@
                                                         <input type="hidden" name="kelurahan[]" value="{{ $kel->id }}" readonly>
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="jml_kel_miliki_jamban_sehat[]" class="form-control" value="{{ old('jml_kel_miliki_jamban_sehat.'.$i-1) }}">
+                                                        <input type="number" name="jml_kel_miliki_jamban_sehat[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['jml_kel_miliki_jamban_sehat'] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="jml_kel_keseluruhan_kel_resiko1[]" class="form-control" value="{{ old('jml_kel_keseluruhan_kel_resiko1.'.$i-1) }}">
+                                                        <input type="number" name="jml_kel_keseluruhan_kel_resiko1[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)][''jml_kel_keseluruhan_kel_resiko1] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="presentase_kel_yg_telah_stop_babs[]" class="form-control" value="{{ old('presentase_kel_yg_telah_stop_babs.'.$i-1) }}">
+                                                        <input type="number" name="presentase_kel_yg_telah_stop_babs[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['presentase_kel_yg_telah_stop_babs'] }}">
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -848,7 +859,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <div class="table-responsive" style="max-height: 90vhh; overflow: scroll">
+                                <div class="table-responsive" style="max-height: 90vh; overflow: scroll">
                                     <table class="table table-striped table-bordered table-hover table-form">
                                         <thead>
                                             <tr>
@@ -875,13 +886,13 @@
                                                         <input type="hidden" name="kelurahan[]" value="{{ $kel->id }}" readonly>
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="jml_kel_laksanakan_phbs[]" class="form-control" value="{{ old('jml_kel_laksanakan_phbs.'.$i-1) }}">
+                                                        <input type="number" name="jml_kel_laksanakan_phbs[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['jml_kel_laksanakan_phbs'] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="jml_kel_keseluruhan_kel_resiko2[]" class="form-control" value="{{ old('jml_kel_keseluruhan_kel_resiko2.'.$i-1) }}">
+                                                        <input type="number" name="jml_kel_keseluruhan_kel_resiko2[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['jml_kel_keseluruhan_kel_resiko2'] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="presentase_kel_telah_laksanakan_phbs[]" class="form-control" value="{{ old('presentase_kel_telah_laksanakan_phbs.'.$i-1) }}">
+                                                        <input type="number" name="presentase_kel_telah_laksanakan_phbs[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['presentase_kel_telah_laksanakan_phbs'] }}">
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -898,43 +909,4 @@
         </div>
     </div>
 
-@endsection
-
-
-@section('modal-section')
-    <div class="modal fade" id="form-history">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Riwayat Input</h5>
-                    <button class="close">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <table class="table table-bordered table-hover">
-                        <thead>
-                            <tr class="text-center">
-                                <th>No</th>
-                                <th>Bulan & Tahun</th>
-                                <th>Opsi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        @php
-                            $no = 1;
-                        @endphp
-                            @foreach ($report_history as $report)
-                                <tr class="text-center">
-                                    <td>{{ $no++ }}</td>
-                                    <td>{{ $months[$report->bulan - 1] . " " . $report->tahun }}</td>
-                                    <td>
-                                        <a class="btn btn-sm btn-outline-warning" href="{{ url('form/dinkes/' . "$report->tahun-$report->bulan") }}">Lihat</a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection

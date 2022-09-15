@@ -95,6 +95,12 @@
                     <span>Form Dinkes</span></a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url('form/disdik') }}">
+                    <i class="fas fa-fw fa-clipboard"></i>
+                    <span>Form Dinas Pendidikan </span></a>
+            </li>
+
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
@@ -201,6 +207,8 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
+
+    @yield('modal-section')
 
     <!-- Bootstrap core JavaScript-->
     <script src="{{ asset('assets/vendor/jquery/jquery.min.js') }}"></script>

@@ -2,8 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DiskominfoController;
+use App\Http\Controllers\DisdikController;
 use App\Http\Controllers\DinkesController;
 use App\Http\Controllers\DinsosController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -23,29 +25,25 @@ Route::get('/', function() {
 Route::prefix('form')->group(function() {
     Route::get('/diskominfo', [DiskominfoController::class, 'index']);
     Route::post('/diskominfo/submit', [DiskominfoController::class, 'store']);
-
-<<<<<<< Updated upstream
-=======
+    
     Route::get('/disdik', [DisdikController::class, 'index']);
     Route::post('/disdik/submit', [DisdikController::class, 'store']);
 
->>>>>>> Stashed changes
     Route::get('/dinkes', [DinkesController::class, 'index']);
     Route::post('/dinkes/submit', [DinkesController::class, 'store']);
     
     Route::get('/dinsos', [DinsosController::class, 'index']);
     Route::post('/dinsos/submit', [DinsosController::class, 'store']);
-<<<<<<< Updated upstream
-=======
+
+    Route::get('/disdik/{date}', [DisdikController::class, 'edit']);
+    Route::post('/disdik/update', [DisdikController::class, 'update']);
 
     Route::get('/diskominfo/{date}', [DiskominfoController::class, 'edit']);
     Route::post('/diskominfo/update', [DiskominfoController::class, 'update']);
 
     Route::get('/dinsos/{date}', [DinsosController::class, 'edit']);
     Route::post('/dinsos/update', [DinsosController::class, 'update']);
-
+    
     Route::get('/dinkes{date}', [DinkesController::class, 'edit']);
     Route::post('/dinkes/update', [DinkesController::class, 'update']);
-
->>>>>>> Stashed changes
 });

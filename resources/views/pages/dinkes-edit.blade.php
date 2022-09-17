@@ -35,6 +35,7 @@
                 <div class="card-body">
                     <form action="{{ url('/form/dinkes/update') }}" method="POST">
                         @csrf
+                        <input type="hidden" name="id_report_non_kelurahan" value="{{ $report_non_kelurahan['id'] }}" readonly>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Bulan dan Tahun</label>
                             <div class="col-sm-2">
@@ -96,7 +97,7 @@
 
                         <!-- Tab panes -->
                         <div class="tab-content">
-                            <div class="tab-pane fade" id="kesehatan">
+                            <div class="tab-pane active" id="kesehatan">
                                 <div class="alert alert-info alert-dismissable fade show mt-3" role="alert">
                                     Setiap kolom harus diisi. Bila ada data yang kosong, masukkan "0".
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -840,7 +841,7 @@
                                                         <input type="number" name="jml_kel_miliki_jamban_sehat[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['jml_kel_miliki_jamban_sehat'] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="jml_kel_keseluruhan_kel_resiko1[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)][''jml_kel_keseluruhan_kel_resiko1] }}">
+                                                        <input type="number" name="jml_kel_keseluruhan_kel_resiko1[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['jml_kel_keseluruhan_kel_resiko1'] }}">
                                                     </td>
                                                     <td>
                                                         <input type="number" name="presentase_kel_yg_telah_stop_babs[]" class="form-control" value="{{ $report_kelurahan[array_search($kel->id, $column_kelurahan_only)]['presentase_kel_yg_telah_stop_babs'] }}">

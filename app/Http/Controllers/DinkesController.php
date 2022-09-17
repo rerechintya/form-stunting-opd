@@ -165,7 +165,10 @@ class DinkesController extends Controller
         if ($existing_periode) {
             return back()->with('error', "Data pada periode yang sama ({$this->months[$bulan - 1]} {$tahun}) sudah ada, tidak dapat menyimpan data duplikat.")->withInput();
         }
-        
+        $non_kelurahan_data = [
+            'tahun' => $tahun,
+            'bulan' => $bulan,
+        ];
         /**
          * Siapkan data yang berbentuk per kelurahan, contohnya pada OPD Diskominfo yaitu data pada sheet "Kesehatan (Data Supply)"
          */
@@ -235,12 +238,13 @@ class DinkesController extends Controller
          * Submit data yang sudah disiapkan
          * Untuk data per kelurahan menggunakan perintah upsert untuk batch insert
          */
+        $non_kelurahan_insert = Dinkes::create($non_kelurahan_data);
         $per_kelurahan_insert = Dinkes::upsert($per_kelurahan_data, []);
 
         /**
          * Kembali ke halaman sebelumnya dengan pesan berhasil atau gagal
          */
-        if ($per_kelurahan_data) return redirect('/form/dinkes')->with('success', 'Data berhasil disimpan.');
+        if ($non_kelurahan_insert && $per_kelurahan_data) return redirect('/form/dinkes')->with('success', 'Data berhasil disimpan.');
 
         return back()->with('error', 'Gagal menyimpan data')->withInput();
     }
@@ -265,7 +269,7 @@ class DinkesController extends Controller
         $report_kelurahan = array_slice($reports, $index_report_kelurahan['start'], $index_report_kelurahan['end']);
         $column_kelurahan_only = array_column($report_kelurahan, 'kelurahan');
         
-        return view('pages.dinkes-edit', compact('kelurahan', 'report_kelurahan', 'column_kelurahan_only'));
+        return view('pages.dinkes-edit', compact('kelurahan', 'report_non_kelurahan', 'report_kelurahan', 'column_kelurahan_only'));
     
     }
 
@@ -407,6 +411,11 @@ class DinkesController extends Controller
         /**
          * Siapkan data yang berbentuk per kelurahan, contohnya pada OPD Diskominfo yaitu data pada sheet "Kesehatan (Data Supply)"
          */
+        $non_kelurahan_data = [
+            'tahun' => $tahun,
+            'bulan' => $bulan,
+        ];
+
         $per_kelurahan_data = [];
         for ($i = 0; $i < count($request->desa_kelurahan_melaksanakan_stbm); $i++) {
             array_push($per_kelurahan_data, [
@@ -469,10 +478,7 @@ class DinkesController extends Controller
             ]);
         }
 
-        /**
-         * Submit data yang sudah disiapkan
-         * Untuk data per kelurahan menggunakan perintah upsert untuk batch insert
-         */
+        $non_kelurahan_insert = Dinkes::where('id', $request->id_report_non_kelurahan)->update($non_kelurahan_data);
         $per_kelurahan_insert = Dinkes::upsert(
             $per_kelurahan_data, 
             [],
@@ -539,7 +545,7 @@ class DinkesController extends Controller
         /**
          * Kembali ke halaman sebelumnya dengan pesan berhasil atau gagal
          */
-        if ($per_kelurahan_data) return redirect('/form/dinkes')->with('success', 'Data berhasil disimpan.');
+        if ($non_kelurahan_insert && $per_kelurahan_data) return redirect('/form/dinkes')->with('success', 'Data berhasil disimpan.');
 
         return back()->with('error', 'Gagal menyimpan data')->withInput();
     }

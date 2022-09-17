@@ -3,11 +3,10 @@
 @section('title', 'Form Dinkes')
 
 @section('main-content')
-
     <div class="row">
         <div class="col-12 d-flex flex-row align-items-center justify-content-between mb-4">
             <!-- Page Heading -->
-            <h1 class="h3 text-gray-800">Form Input Dinkes</h1>
+            <h1 class="h3 mb-4 text-gray-800">Form Input Dinkes</h1>
             <button class="btn btn-outline-primary ml-4" data-toggle="modal" data-target="#form-history">Riwayat Input</button>
         </div>
         @if ($errors->any())
@@ -97,7 +96,7 @@
 
                         <!-- Tab panes -->
                         <div class="tab-content">
-                            <div class="tab-pane fade" id="kesehatan">
+                            <div class="tab-pane active" id="kesehatan">
                                 <div class="alert alert-info alert-dismissable fade show mt-3" role="alert">
                                     Setiap kolom harus diisi. Bila ada data yang kosong, masukkan "0".
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">

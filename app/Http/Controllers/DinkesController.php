@@ -419,6 +419,7 @@ class DinkesController extends Controller
         $per_kelurahan_data = [];
         for ($i = 0; $i < count($request->desa_kelurahan_melaksanakan_stbm); $i++) {
             array_push($per_kelurahan_data, [
+                'id' => $request->id_report_kelurahan[$i],
                 'tahun' => $tahun,
                 'bulan' => $bulan,
                 'kelurahan' => $request->kelurahan[$i],
